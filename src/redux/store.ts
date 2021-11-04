@@ -6,12 +6,12 @@ import { useDispatch } from "react-redux";
 import rootReducer from "./reducers";
 
 export const store = configureStore({
-  reducer: {
-    rootReducer,
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
+	reducer: {
+		rootReducer,
+		[pokemonApi.reducerPath]: pokemonApi.reducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat(pokemonApi.middleware),
 });
 
 setupListeners(store.dispatch);

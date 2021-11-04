@@ -11,44 +11,44 @@ const API_URL =
   "https://official-joke-api.appspot.com/jokes/programming/random";
 
 export const ReactQueryExample = () => {
-  const { data, refetch } = useQuery(
-    "repoData",
-    () => fetch(API_URL).then((res) => res.json()),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+	const { data, refetch } = useQuery(
+		"repoData",
+		() => fetch(API_URL).then((res) => res.json()),
+		{
+			refetchOnWindowFocus: false,
+		}
+	);
 
-  const handleClick = () => {
-    // manually refetch
-    refetch();
-  };
+	const handleClick = () => {
+		// manually refetch
+		refetch();
+	};
 
-  if (data) {
-    return (
-      <div>
-        <header>
-          <h2>React Query Data Fetching Example</h2>
-        </header>
-        <main>
-          <p>Programmer Jokes {`#${data[0].id}`}</p>
-          <p>{data[0].setup}</p>
-          <p>{data[0].punchline}</p>
-          <p>
-            <button onClick={handleClick}>Give me another</button>
-          </p>
-        </main>
-        <footer>
-          <a
-            href="https://react-query.tanstack.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+	if (data) {
+		return (
+			<div>
+				<header>
+					<h2>React Query Data Fetching Example</h2>
+				</header>
+				<main>
+					<p>Programmer Jokes {`#${data[0].id}`}</p>
+					<p>{data[0].setup}</p>
+					<p>{data[0].punchline}</p>
+					<p>
+						<button onClick={handleClick}>Give me another</button>
+					</p>
+				</main>
+				<footer>
+					<a
+						href="https://react-query.tanstack.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
             Go To Documentation
-          </a>
-        </footer>
-      </div>
-    );
-  }
-  return null;
+					</a>
+				</footer>
+			</div>
+		);
+	}
+	return null;
 };
