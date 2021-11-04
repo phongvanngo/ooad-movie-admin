@@ -5,10 +5,12 @@ import { Container, Header, Main, Footer, Cards } from "components";
 const Home: React.FC = () => {
 	return (
 		<Container>
-			<Header />
-			<Main />
-			<Cards />
-			<Footer />
+			<div>
+				<Header />
+				<Main />
+				<Cards />
+				<Footer />
+			</div>
 		</Container>
 	);
 };
