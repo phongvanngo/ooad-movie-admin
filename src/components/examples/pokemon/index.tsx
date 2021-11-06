@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useGetPokemonByNameQuery } from "redux/services/pokemon";
+import { useGetPokemonByNameQuery } from "app/redux/services/pokemon";
 
 export default function Pokemon() {
 	// Using a query hook automatically fetches data and returns query values

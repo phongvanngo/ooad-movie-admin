@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { increase, decrease } from "redux/actions";
-import { RootState } from "redux/reducers";
-import { useAppDispatch } from "redux/store";
+import { increase, decrease } from "app/redux/actions";
+import { AppRootState } from "app/redux/reducers";
+import { useAppDispatch } from "app/redux/store";
 
 export default function Counter() {
 	const dispatch = useAppDispatch();
 	const count = useSelector(
-		(state: RootState) => state.rootReducer.counter.count
+		(state: AppRootState) => state.rootReducer.counter.count
 	);
 
 	return (

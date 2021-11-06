@@ -1,16 +1,18 @@
 import React from "react";
 
 import { Container, Header, Main, Footer, Cards } from "components";
+import Pokemon from "components/examples/pokemon";
+
 
 const Home: React.FC = () => {
+	console.log("hello");
 	return (
 		<Container>
-			<div>
-				<Header />
-				<Main />
-				<Cards />
-				<Footer />
-			</div>
+			<Pokemon />
+			<Header />
+			<Main />
+			<Cards />
+			<Footer />
 		</Container>
 	);
 };

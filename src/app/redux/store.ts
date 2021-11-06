@@ -17,6 +17,6 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppDispatch = ():any => useDispatch<AppDispatch>();
 
 export default store;
