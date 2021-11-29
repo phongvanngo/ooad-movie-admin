@@ -1,22 +1,30 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { pokemonApi } from "./services/pokemon";
-import { useDispatch } from "react-redux";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import createSagaMiddleware from "@redux-saga/core";
 
 import rootReducer from "./reducers";
+import rootSaga from "./rootSaga";
 
+const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
 	reducer: {
 		rootReducer,
-		[pokemonApi.reducerPath]: pokemonApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(pokemonApi.middleware),
+		getDefaultMiddleware().concat(sagaMiddleware),
 });
 
-setupListeners(store.dispatch);
+sagaMiddleware.run(rootSaga);
 
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = ():any => useDispatch<AppDispatch>();
+export type AppRootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    AppRootState,
+    unknown,
+    Action<string>
+>;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector;
 
 export default store;

@@ -1,4 +1,4 @@
-import { AppRootState } from "app/redux/reducers";
+import { AppRootState } from "app/redux/store";
 import { signIn } from "app/redux/slices/adminAuth";
 import { ISignInPayload } from "app/redux/slices/adminAuth/types";
 import { useAppDispatch } from "app/redux/store";

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { adminAuthApi } from "app/api/adminAuthApi";
 import { COOKIE_USER } from "app/constants";
 import { AdministratorModel } from "app/definitions/User";
-import { Thunk } from "app/redux/reducers";
+import { AppThunk } from "app/redux/store";
 import { getCookie, removeCookie, setCookie } from "app/utils/cookie";
 import { ISignInPayload, ISignInResponsePayload } from "./types";
 
@@ -43,20 +43,19 @@ const counterSlice = createSlice({
 
 export const { signInSuccess,signOut,reLogin } = counterSlice.actions;
 
-export const signIn = (ISignInPayload : ISignInPayload,callback:VoidFunction): Thunk => {
-	return async (dispatch) => {
-		try {
-			const response = await adminAuthApi.signIn(ISignInPayload) as ISignInResponsePayload;
-			console.log(response);
-			if(response) {
-				dispatch(signInSuccess(response));
-				callback();
-			}
-		} catch (e) {
-			console.log("signInError",e);
+export const signIn = (ISignInPayload : ISignInPayload,callback:VoidFunction): AppThunk =>async (dispatch)=> {
+	try {
+		const response = await adminAuthApi.signIn(ISignInPayload) as ISignInResponsePayload;
+		console.log(response);
+		if(response) {
+			dispatch(signInSuccess(response));
+			callback();
 		}
-	};
+	} catch (e) {
+		console.log("signInError",e);
+	}
 };
+
 
 
 
