@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect } from "react";
 
 
 export default function GenresManagementPage(): ReactElement {
-	const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();fsefsef;
 	useEffect(() => {
 		dispatch(genreActions.fetchGenreList());
 	}, []);
