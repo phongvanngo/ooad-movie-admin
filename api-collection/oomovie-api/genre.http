@@ -1,0 +1,26 @@
+@baseURL=http://housingmovie-env.eba-syvga2mw.ap-southeast-1.elasticbeanstalk.com/api
+
+# CRUD Genre
+
+# @name GetGenre
+GET {{baseURL}}/genres
+
+###
+
+# @name PostGenre
+POST {{baseURL}}/genre
+content-type: application/json
+
+{
+    "title": "SchoolDrama"
+}
+
+###
+# @name DeleteGenre
+DELETE {{baseURL}}/genre
+content-type: application/json
+
+"4cf77920-f920-4b88-b073-dc8cc7be6930"
+
+###
+

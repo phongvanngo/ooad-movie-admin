@@ -1,7 +1,8 @@
 import {
-	DesktopOutlined
+	PlaySquareOutlined, HomeOutlined
 } from "@ant-design/icons";
 import React, { ReactElement } from "react";
+import { ADMIN_ROUTE, APP_ROUTE } from "routes/routes.const";
 
 export interface IMenuItem  {
     key:string;
@@ -16,73 +17,47 @@ export interface IMenuItem  {
 
 export const menus: Array<IMenuItem> = [
 	{
-		key:"1",
-		icon:():ReactElement => (<DesktopOutlined />),
-		title:"Trang chủ",
-		path:"/admin/movie",
-		subMenuKey:"sub1",
-		subMenu:[
-			{
-				key:"2",
-				title:"Novapo",
-				path:"/admin/novapo"
-			},
-			{
-				key:"3",
-				title:"Novapo",
-				path:"/admin/novapo",
-				subMenuKey: "sub6",
-				subMenu: [
-					{
-						key: "24545",
-						title: "Nov fse fse apo",
-						path: "/admin/novapo"
-					},
-					{
-						key: "3fse",
-						title: "Novafsefpo",
-						path: "/admin/novapo"
-					},
-					{
-						key: "4fsef",
-						title: "Nofsefvapo",
-						path: "/admin/novapo"
-					},
-				]
-			},
-			{
-				key:"4",
-				title:"Novapo",
-				path:"/admin/novapo"
-			},
-		]
-
-        
+		key:"dashboard",
+		icon: () => <HomeOutlined />,
+		title:"Home",
+		path:`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.DASHBOARD}`
 	},
 	{
-		key:"5",
-		icon:():ReactElement => (<DesktopOutlined />),
-		title:"Hello",
-		path:"/admin/movie",
-		subMenuKey:"sub2",
+		key:"movie",
+		icon: () => <PlaySquareOutlined />,
+		title:"Movie",
+		subMenuKey:"sub_movie",
 		subMenu:[
 			{
-				key:"6",
-				title:"fasfs f",
-				path:"/admin/novapo"
+				key:"danhsachphim",
+				title:"Danh sách phim",
+				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}`
 			},
 			{
-				key:"7",
-				title:"fgsef",
-				path:"/admin/novapo"
-			},
-			{
-				key:"8",
-				title:"Novadgdrgdrgrdgrgpo",
-				path:"/admin/novapo"
+				key:"taophimmoi",
+				title:"Tạo phim mới",
+				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE_CREATE}`
 			},
 		]
 
-        
 	},
+	{
+		key:"genre",
+		icon: () => <PlaySquareOutlined />,
+		title:"Genre",
+		subMenuKey:"genre_management",
+		subMenu:[
+			{
+				key:"danhsachtheloai",
+				title:"Tất cả",
+				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.GENRE}`
+			},
+			{
+				key:"taotheloaimoi",
+				title:"Tạo thể loại mới",
+				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.GENRE_CREATE}`
+			},
+		]
+
+	}
 ];

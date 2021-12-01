@@ -3,20 +3,24 @@ import {
 	Route,
 	Routes
 } from "react-router";
-import AdminDashboard from "./dashboard";
-import GenresManagementPage from "./genres";
-import AdminLayout from "./layout";
-import MovieManagementPage from "./movie";
+import { ADMIN_ROUTE } from "routes/routes.const";
+const  AdminDashboard = React.lazy(()=>import("./dashboard"));
+const  GenresManagementPage = React.lazy(()=>import("./genres"));
+const  AdminLayout = React.lazy(()=>import("./layout"));
+const  MovieManagementPage = React.lazy(()=>import("./movie"));
+const  CreateMovie = React.lazy(()=>import("./movie/create"));
+
 import Test from "./_test/index";
 
 export default function AdminRoutes(): ReactElement {
 	return (
 		<Routes>
 			<Route element={<AdminLayout />}>
-				<Route path="/" element={<AdminDashboard />}/>
-				<Route path="/movie" element={<MovieManagementPage />}/>
-				<Route path="/genre" element={<GenresManagementPage />}/>
-				<Route path="/test" element={<Test />}/>
+				<Route path={`${ADMIN_ROUTE.DASHBOARD}`} element={<AdminDashboard />}/>
+				<Route path={`${ADMIN_ROUTE.MOVIE}`} element={<MovieManagementPage />}/>
+				<Route path={`${ADMIN_ROUTE.GENRE}`} element={<GenresManagementPage />}/>
+				<Route path={`${ADMIN_ROUTE.MOVIE_CREATE}`} element={<CreateMovie />}/>
+				<Route path={`${ADMIN_ROUTE.DASHBOARD}`} element={<Test />}/>
 			</Route>
 		</Routes>
 	);

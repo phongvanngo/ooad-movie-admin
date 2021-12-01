@@ -1,0 +1,15 @@
+@baseURL=https://api.themoviedb.org/3
+@apiKey=54aa709695ac2db22242917da035c1fa
+@movie_id=580489
+
+# Discover Movies
+
+# @name GetDiscoverMovie
+GET {{baseURL}}/discover/movie?api_key={{apiKey}}
+
+###
+
+# Movie Detail
+
+# @name GetMovieDetail
+GET {{baseURL}}/movie/{{movie_id}}?api_key={{apiKey}}

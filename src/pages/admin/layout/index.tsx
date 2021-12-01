@@ -1,6 +1,7 @@
 import { Breadcrumb, Layout } from "antd";
 import React, { ReactElement } from "react";
 import { Outlet } from "react-router";
+import AppBreadcrumb from "./AppBreadCrumb";
 import Sidebar from "./sidebar";
 import "./style.scss";
 
@@ -15,10 +16,7 @@ function MainLayout():ReactElement {
 			<Layout className="site-layout">
 				<Header className="site-layout-background" style={{height:"45px", padding: 0 }} />
 				<Content style={{ margin: "0 16px" }}>
-					<Breadcrumb style={{ margin: "16px 0" }}>
-						<Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-						<Breadcrumb.Item>Bill</Breadcrumb.Item>
-					</Breadcrumb>
+					<AppBreadcrumb />
 					<div className="site-layout-background" style={{ padding: 24, minHeight: "75vh" }}>
 						<Outlet />
 					</div>

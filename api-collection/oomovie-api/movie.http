@@ -1,0 +1,9 @@
+@baseURL=http://housingmovie-env.eba-syvga2mw.ap-southeast-1.elasticbeanstalk.com/api
+
+# Discover Movies
+
+# @name GetMovie
+GET {{baseURL}}/movies
+
+###
+

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import {
 	BrowserRouter as Router, Navigate, Route, Routes, useLocation
 } from "react-router-dom";
-import { ADMIN_ROUTE, PUBLIC_ROUTE } from "./routes.const";
+import { ADMIN_ROUTE, APP_ROUTE } from "./routes.const";
 
 const AdminPage = React.lazy(() => import("pages/admin/index"));
 const SignInPage = React.lazy(() => import("pages/sign-in/index"));
@@ -22,10 +22,10 @@ export default function AppRoutes(): ReactElement {
 				<Routes>
 					<Route>
 						<Route path="/" element={
-							<Navigate to={ADMIN_ROUTE.HOME} />
+							<Navigate to={APP_ROUTE.ADMIN} />
 						} />
-						<Route path={PUBLIC_ROUTE.SIGN_IN} element={<SignInPage />}/>
-						<Route path={`${ADMIN_ROUTE.HOME}/*`} element={
+						<Route path={APP_ROUTE.SIGN_IN} element={<SignInPage />}/>
+						<Route path={`${APP_ROUTE.ADMIN}/*`} element={
 							<RequireAuth>
 								<div>
 									<AdminPage />
@@ -45,13 +45,13 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 
 
 	const isLoggedIn = useSelector(
-		(state:AppRootState) => state.rootReducer.adminAuth.isLoggedIn,
+		(state:AppRootState) => state.rootReducer.adminAuthThunk.isLoggedIn,
 	);
 
 	console.log(isLoggedIn);
 
 	if (!isLoggedIn) {
-		return <Navigate to={PUBLIC_ROUTE.SIGN_IN} state={{ from: location }} />;
+		return <Navigate to={APP_ROUTE.SIGN_IN} state={{ from: location }} />;
 	} 
 	return children;
 }

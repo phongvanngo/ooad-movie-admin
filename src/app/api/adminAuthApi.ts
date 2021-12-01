@@ -1,5 +1,5 @@
 import { ResponseStatus } from "app/definitions/Enum";
-import { ISignInPayload } from "app/redux/slices/adminAuth/types";
+import { ISignInPayload } from "app/redux/slices/adminAuthThunk/types";
 import { callAPI } from "./fakeApi";
 
 export const adminAuthApi = {

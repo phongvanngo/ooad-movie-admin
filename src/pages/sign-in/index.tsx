@@ -1,6 +1,6 @@
 import { AppRootState } from "app/redux/store";
-import { signIn } from "app/redux/slices/adminAuth";
-import { ISignInPayload } from "app/redux/slices/adminAuth/types";
+import { signIn } from "app/redux/slices/adminAuthThunk";
+import { ISignInPayload } from "app/redux/slices/adminAuthThunk/types";
 import { useAppDispatch } from "app/redux/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -10,7 +10,7 @@ function LoginPage():JSX.Element {
 	const navigate = useNavigate(); 
 	const location = useLocation();
 	const isLoggedIn = useSelector(
-		(state: AppRootState) => state.rootReducer.adminAuth.isLoggedIn,
+		(state: AppRootState) => state.rootReducer.adminAuthThunk.isLoggedIn,
 	);
 	
 	const state = location.state as { from: Location };
