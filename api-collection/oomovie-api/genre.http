@@ -12,7 +12,7 @@ POST {{baseURL}}/genre
 content-type: application/json
 
 {
-    "title": "SchoolDrama"
+    "name": "Adult"
 }
 
 ###
@@ -20,7 +20,9 @@ content-type: application/json
 DELETE {{baseURL}}/genre
 content-type: application/json
 
-"4cf77920-f920-4b88-b073-dc8cc7be6930"
+{
+    "id":"c708ef8f-f93b-437b-ba56-87e2ca435903"
+}
 
 ###
 

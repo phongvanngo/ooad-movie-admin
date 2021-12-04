@@ -1,16 +1,10 @@
-import { genreActions } from "app/redux/genre/genreSlice";
-import { useAppDispatch } from "app/redux/store";
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
+import GenreListPage from "./GenreListPage";
 
-
-export default function GenresManagementPage(): ReactElement {
-	const dispatch = useAppDispatch();
-	useEffect(() => {
-		dispatch(genreActions.fetchGenreList());
-	}, []);
+export default function GenreManagement(): ReactElement {
 	return (
 		<div>
-            genre
+			<GenreListPage />
 		</div>
 	);
 }

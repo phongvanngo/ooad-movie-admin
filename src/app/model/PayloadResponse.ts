@@ -7,8 +7,8 @@ export interface PaginationParams {
 }
 
 interface MetaField {
-    succces: boolean;
-    messsage: string;
+    succces?: boolean;
+    messsage?: string;
 }
 
 

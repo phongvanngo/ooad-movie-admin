@@ -13,3 +13,8 @@ GET {{baseURL}}/discover/movie?api_key={{apiKey}}
 
 # @name GetMovieDetail
 GET {{baseURL}}/movie/{{movie_id}}?api_key={{apiKey}}
+
+###
+
+# @name Genre
+GET {{baseURL}}/genre/movie/list?api_key={{apiKey}}

@@ -30,6 +30,16 @@ const genreSlice = createSlice({
 		fetchGenreListFailed(state) {
 			state.loading = false;
 		},
+		fetchGenreListFromTheMovieDB(state) {
+			state.loading = true;
+		},
+		fetchGenreListFromTheMovieDBSuccess(state,action:PayloadAction<DataResponse<Genre[]>>) {
+			state.list = [...state.list,...action.payload.data];
+			state.loading = false;
+		},
+		fetchGenreListFromTheMovieDBFailed(state) {
+			state.loading = true;
+		},
 	},
 });
 
@@ -38,7 +48,7 @@ export const genreActions = genreSlice.actions;
 
 // Selectors
 export const selectGenreList = (state: AppRootState) => state.rootReducer.genre.list;
-export const selectStudenLoading = (state: AppRootState) => state.rootReducer.genre.loading;
+export const selectGenreLoading = (state: AppRootState) => state.rootReducer.genre.loading;
 
 // Reducer
 const genreReducer = genreSlice.reducer;

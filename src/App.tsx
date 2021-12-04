@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import AppRoutes from "routes";
 import "styles/global.scss";
+// import "antd/dist/antd.css";
 import "./i18n";
 
 

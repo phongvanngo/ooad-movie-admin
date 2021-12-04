@@ -1,4 +1,4 @@
-import { Menu } from "antd";
+import { Affix, Menu } from "antd";
 import { default as React, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { IMenuItem, menus } from "./options";
@@ -24,12 +24,14 @@ export default function SidebarMenu(): ReactElement {
 		);
 	}
 	return (
-		<Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-			{menus.map(menuItem => {
-				return (
-					<MenuItem option={menuItem} key={menuItem.key} />
-				);
-			})}
-		</Menu>
+		<Affix>
+			<Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+				{menus.map(menuItem => {
+					return (
+						<MenuItem option={menuItem} key={menuItem.key} />
+					);
+				})}
+			</Menu>
+		</Affix>
 	);
 }
