@@ -6,17 +6,22 @@ import { AppRootState } from "../store";
 export interface GenreState {
     loading: boolean;
     list: Genre[];
+	editingGenre:Genre;
 }
 
 const initialState: GenreState = {
 	loading: false,
 	list: [],
+	editingGenre:null,
 };
 
 const genreSlice = createSlice({
 	name: "genre",
 	initialState,
 	reducers: {
+		setEditingGenre(state,action:PayloadAction<Genre>) {
+			state.editingGenre = action.payload;
+		},
 		fetchGenreList(state) {
 			state.loading = true;
 		},
@@ -49,6 +54,7 @@ export const genreActions = genreSlice.actions;
 // Selectors
 export const selectGenreList = (state: AppRootState) => state.rootReducer.genre.list;
 export const selectGenreLoading = (state: AppRootState) => state.rootReducer.genre.loading;
+export const selectEditingGenre = (state: AppRootState) => state.rootReducer.genre.editingGenre;
 
 // Reducer
 const genreReducer = genreSlice.reducer;

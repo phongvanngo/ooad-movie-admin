@@ -25,4 +25,8 @@ content-type: application/json
 }
 
 ###
+# @name Get specific genre
+GET {{baseURL}}/genre/01b32b14-e72c-4a7d-8dd4-b223575bb39c
+
+###
 
