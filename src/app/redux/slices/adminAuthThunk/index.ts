@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { adminAuthApi } from "app/api/adminAuthApi";
 import { COOKIE_USER } from "app/constants";
 import { AdminModel } from "app/model/User";
-import { AppThunk } from "app/redux/store";
+import { AppRootState, AppThunk } from "app/redux/store";
 import { getCookie, removeCookie, setCookie } from "app/utils/cookie";
 import { ISignInPayload, ISignInResponsePayload } from "./types";
 
@@ -11,7 +11,7 @@ interface IAdminAuth {
 }
 
 const initialState: IAdminAuth = {
-	isLoggedIn:false
+	isLoggedIn:undefined
 };
 
 const counterSlice = createSlice({
@@ -55,6 +55,9 @@ export const signIn = (ISignInPayload : ISignInPayload,callback:VoidFunction): A
 		console.log("signInError",e);
 	}
 };
+
+export const selectIsLoggedIn = (state: AppRootState) =>
+	state.rootReducer.adminAuthThunk.isLoggedIn;
 
 
 

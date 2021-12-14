@@ -1,5 +1,6 @@
 import { reLogin } from "app/redux/actions";
-import { useAppDispatch,AppRootState } from "app/redux/store";
+import { selectIsLoggedIn } from "app/redux/slices/adminAuthThunk";
+import { useAppDispatch,AppRootState, useAppSelector } from "app/redux/store";
 import NotFoundPage from "pages/notfound";
 import React, { ReactElement, Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -13,9 +14,11 @@ const SignInPage = React.lazy(() => import("pages/sign-in/index"));
 
 export default function AppRoutes(): ReactElement {
 	const dispatch = useAppDispatch();
+	const isLoggedIn = useAppSelector(selectIsLoggedIn);
 	useEffect(() => {
 		dispatch(reLogin());
 	}, []);
+	if (isLoggedIn === undefined) return <div>Loading</div>;
 	return (
 		<Suspense fallback={<div>loading</div>}>
 			<Router>
@@ -43,7 +46,7 @@ export default function AppRoutes(): ReactElement {
 function RequireAuth({ children }: { children: JSX.Element }) {
 	const location = useLocation();
 
-
+	console.log("first location",location);
 	const isLoggedIn = useSelector(
 		(state:AppRootState) => state.rootReducer.adminAuthThunk.isLoggedIn,
 	);
@@ -53,5 +56,6 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 	if (!isLoggedIn) {
 		return <Navigate to={APP_ROUTE.SIGN_IN} state={{ from: location }} />;
 	} 
+	console.log("auutttthhhhhhh",location);
 	return children;
 }
