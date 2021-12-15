@@ -5,7 +5,11 @@
 # Discover Movies
 
 # @name GetDiscoverMovie
-GET {{baseURL}}/discover/movie?api_key={{apiKey}}
+GET {{baseURL}}/discover/movie?api_key={{apiKey}}&page=6
+
+###
+# @name SearchMovie
+GET {{baseURL}}/search/movie?api_key={{apiKey}}&query= 
 
 ###
 

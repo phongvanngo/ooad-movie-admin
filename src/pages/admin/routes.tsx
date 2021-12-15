@@ -19,6 +19,7 @@ export default function AdminRoutes(): ReactElement {
 			<Route element={<AdminLayout />}>
 				<Route path={`${ADMIN_ROUTE.DASHBOARD}`} element={<AdminDashboard />}/>
 				<Route path={`${ADMIN_ROUTE.MOVIE}`} element={<MovieManagementPage />}/>
+				<Route path={`${ADMIN_ROUTE.MOVIE}/:movieId`} element={<CreateMovie />}/>
 				<Route path={`${ADMIN_ROUTE.GENRE}`} element={<GenresManagementPage />}/>
 				<Route path={`${ADMIN_ROUTE.GENRE_CREATE}`} element={<GenreCreate />}/>
 				<Route path={`${ADMIN_ROUTE.GENRE}/:genreId`} element={<GenreCreate />}/>

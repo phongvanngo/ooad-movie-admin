@@ -1,5 +1,5 @@
 export interface MovieModel {
-    id:number;
+    id:string;
     adult:boolean;
     backdrop_path:string;
     budget:string;

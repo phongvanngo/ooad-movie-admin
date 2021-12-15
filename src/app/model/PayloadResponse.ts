@@ -1,9 +1,9 @@
 // types of api data response
 
 export interface PaginationParams {
-    page: number;
-    total_page:number;
-    total_results:number;
+    page?: number;
+    total_pages?:number;
+    total_results?:number;
 }
 
 interface MetaField {
@@ -12,9 +12,8 @@ interface MetaField {
 }
 
 
-export interface DataResponse<T> extends MetaField {
+export interface DataResponse<T> extends MetaField,Partial<PaginationParams> {
     data:T;
-    pagination?:PaginationParams;
     results?:T
 }
 

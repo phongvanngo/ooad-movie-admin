@@ -69,10 +69,10 @@ export default function GenreList(): ReactElement {
 				</div>
 				<div className="flex items-center">
 					<Input.Search className="mr-2" placeholder="input search text" enterButton size="middle" loading={false} />
-					<Button type="primary" icon={<PlusCircleOutlined onClick={()=>{
+					<Button type="primary" onClick={() => {
 						console.log("hi");
 						navigate(`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.GENRE_CREATE}`);
-					}}/>}>
+					}} icon={<PlusCircleOutlined />}>
 						CREATE
 					</Button>
 				</div>
@@ -92,7 +92,7 @@ export default function GenreList(): ReactElement {
 				loadMore={loadMore}
 				renderItem={item =>
 					(
-						<GenreItem genre={item}/>
+						<GenreItem genre={item} />
 					)
 				}
 			/>
