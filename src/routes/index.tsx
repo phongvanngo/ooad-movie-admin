@@ -18,7 +18,7 @@ export default function AppRoutes(): ReactElement {
 	useEffect(() => {
 		dispatch(reLogin());
 	}, []);
-	if (isLoggedIn === undefined) return <div>Loading</div>;
+	// if (isLoggedIn === undefined) return <div>Loading</div>;
 	return (
 		<Suspense fallback={<div>loading</div>}>
 			<Router>

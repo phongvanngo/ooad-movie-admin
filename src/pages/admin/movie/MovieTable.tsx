@@ -1,8 +1,10 @@
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Image, Input, message, Space, Table, Form } from "antd";
 import movieDbApiConfig from "app/api/theMovieDBApi/config";
+import { MovieModelMapPattern } from "app/model/movie";
 import { movieActions, MovieSearchParams, selectMovieList, selectMovieLoading, selectTablePagination } from "app/redux/movie/movieSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { MapVariable } from "app/utils/mapVariable";
 import ButtonItemDelete from "components/common/ButtonItemDelete";
 import { debounce } from "lodash";
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
@@ -30,6 +32,8 @@ export default function MovieList(): ReactElement {
 	const navigate = useNavigate();
 	const inputSearchRef = useRef(null);
 	const [form] = Form.useForm();
+
+	console.log("MapVariable",movies[0],MapVariable(movies[0],MovieModelMapPattern));
 
 	const [keyword, setKeyword] = useState<string>();
 
