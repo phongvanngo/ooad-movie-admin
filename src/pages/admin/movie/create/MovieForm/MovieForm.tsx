@@ -57,7 +57,7 @@ export default function MovieForm({
 				release_date: converDate(initialValue.release_date),
 				budget: initialValue.budget,
 				homepage: initialValue.homepage,
-				isTVSeries: false,
+				isTVSeries: initialValue.isTVSeries,
 				adult: initialValue.adult,
 			});
 			setMovieId(initialValue.id);
@@ -75,7 +75,7 @@ export default function MovieForm({
 			const movie_detail: MovieModel = res as MovieModel;
 			console.log(res);
 			form.setFieldsValue({
-				id: movie_detail.id,
+				// id: movie_detail.id,
 				backdrop_path: movie_detail.backdrop_path,
 				title: movie_detail.title,
 				original_title: movie_detail.original_title,

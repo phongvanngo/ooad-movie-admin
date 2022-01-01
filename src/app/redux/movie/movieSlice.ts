@@ -43,6 +43,9 @@ const movieSlice = createSlice({
 		setEditingMovie(state, action: PayloadAction<MovieModel>) {
 			state.editingMovie = action.payload;
 		},
+		setEmptyEditingMovie(state) {
+			state.editingMovie = undefined;
+		},
 		fetchMovieList(state) {
 			state.loading = true;
 		},
@@ -66,7 +69,9 @@ const movieSlice = createSlice({
 			action: PayloadAction<DataResponse<MovieModel[]>>,
 		) {
 			state.loading = false;
-			state.list = [...action.payload.data.map(e=>MapVariable<MovieModel>(e,MovieModelMapPattern)),...state.list];
+			state.list = [
+				...action.payload.data.map(e=>MapVariable<MovieModel>(e,MovieModelMapPattern)).reverse()
+			];
 		},
 		fetchMovieListFromTheMovieDB(
 			state,

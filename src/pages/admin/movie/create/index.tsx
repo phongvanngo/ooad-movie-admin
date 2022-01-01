@@ -16,7 +16,7 @@ export default function CreateMovie(): ReactElement {
 		(async () => {
 			try {
 				if (initialValue) {
-					const response = await movieApi.update(movie);
+					const response = await movieApi.update({...movie,id:initialValue.id});
 				} else {
 					const response = await movieApi.add(movie);
 				}
@@ -32,7 +32,7 @@ export default function CreateMovie(): ReactElement {
 	}, []);
 	return (
 		<div>
-			<MovieForm onSubmit={handleSubmit}/>
+			<MovieForm onSubmit={handleSubmit} initialValue={initialValue}/>
 		</div>
 	);
 }
