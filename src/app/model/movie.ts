@@ -1,3 +1,5 @@
+import { Episode } from "./episode";
+
 export interface MovieModel {
     id: string;
     adult: boolean;
@@ -36,6 +38,7 @@ export interface MovieModelCamelCase {
     voteCount: number,
     likeCount: number,
     viewCount: number,
+    episodes:Array<Episode>
 }
 
 export const MovieModelMapPattern= {

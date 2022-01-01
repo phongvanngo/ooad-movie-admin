@@ -1,4 +1,4 @@
-import { MovieModel, MovieModelMapPattern } from "app/model/movie";
+import { MovieModel, MovieModelCamelCase, MovieModelMapPattern } from "app/model/movie";
 import { DataResponse } from "app/model/PayloadResponse";
 import { MapVariable } from "app/utils/mapVariable";
 import axiosClient from "./axiosClient";
@@ -6,6 +6,10 @@ import axiosClient from "./axiosClient";
 export const movieApi = {
 	getAll: (): Promise<DataResponse<MovieModel[]>> => {
 		const url = "/movies";
+		return axiosClient.get(url);
+	},
+	getById: (id: string): Promise<DataResponse<MovieModelCamelCase>> => {
+		const url = "/movie?id="+id;
 		return axiosClient.get(url);
 	},
 	add: (movie: Partial<MovieModel>): Promise<DataResponse<MovieModel>> => {

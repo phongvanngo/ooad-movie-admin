@@ -1,5 +1,5 @@
-import { EditOutlined } from "@ant-design/icons";
-import { Button, Form, Image, Space, Table, Tag } from "antd";
+import { EditOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import { Button, Form, Image, Space, Table, Tag, Tooltip } from "antd";
 import movieDbApiConfig from "app/api/theMovieDBApi/config";
 import { MovieModel, MovieModelMapPattern } from "app/model/movie";
 import {
@@ -102,26 +102,45 @@ export default function MovieList({ searchTerm }: Props): ReactElement {
 				<Space size="middle">
 					{/* <a>Invite {record.name}</a>
 					<a>Delete</a> */}
-					<Button
-						onClick={() => {
-							// dispatch(genreActions.setEditingGenre(genre));
-							dispatch(movieActions.setEditingMovie(record));
-							navigate(
-								`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${record.id}`,
-							);
-						}}
-						key="delete-genre"
-						type="ghost"
-						size="small"
-						icon={<EditOutlined />}
-					/>
-					<ButtonItemDelete
-						message="Are your sure ?"
-						key="genre-item-delete"
-						onDelete={() => {
-							dispatch(movieActions.deleteMovie(record.id));
-						}}
-					/>
+					<Tooltip placement="topLeft" title="Edit Movie">
+						<Button
+							onClick={() => {
+								// dispatch(genreActions.setEditingGenre(genre));
+								dispatch(movieActions.setEditingMovie(record));
+								navigate(
+									`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${record.id}`,
+								);
+							}}
+							key="delete-genre"
+							type="ghost"
+							size="small"
+							icon={<EditOutlined />}
+						/>
+					</Tooltip>
+					<Tooltip placement="topLeft" title="Manage Episode">
+						<Button
+							onClick={() => {
+								// dispatch(genreActions.setEditingGenre(genre));
+								dispatch(movieActions.setEditingMovie(record));
+								navigate(
+									`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${record.id}/episode`,
+								);
+							}}
+							key="delete-genre"
+							type="ghost"
+							size="small"
+							icon={<VideoCameraOutlined />}
+						/>
+					</Tooltip>
+					<Tooltip placement="topLeft" title="Delete Movie">
+						<ButtonItemDelete
+							message="Are your sure ?"
+							key="genre-item-delete"
+							onDelete={() => {
+								dispatch(movieActions.deleteMovie(record.id));
+							}}
+						/>
+					</Tooltip>
 				</Space>
 			),
 		},
