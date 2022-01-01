@@ -13,6 +13,12 @@ export const movie = {
 		console.log(url);
 		return axiosClient.get(url, { baseURL: THEMOVIEDB_BASEURL });
 	},
+	getById: (id: string): Promise<MovieModel> => {
+		const url = `/movie/${id}?api_key=${THEMOVIEDB_API_KEY}`;
+		console.log(url);
+		return axiosClient.get(url, { baseURL: THEMOVIEDB_BASEURL });
+	},
+	
 	searchByName: (
 		params: MovieSearchParams,
 	): Promise<DataResponse<MovieModel[]>> => {

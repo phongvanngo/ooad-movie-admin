@@ -8,11 +8,29 @@ export function setCookie(name: string, value: any, days = 2): void {
 	document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-export function generateId():string {
+export function generateId(): string {
 	return (
 		Math.random().toString(36).substring(2, 15) +
-        Math.random().toString(36).substring(2, 15)
+		Math.random().toString(36).substring(2, 15)
 	);
 }
 
+export function getRandomInt(max) {
+	return Math.floor(Math.random() * max);
+}
+
+export function converDate(date: string) {
+	const dates = date.split("-");
+	return `${dates[2]}/${dates[1]}/${dates[0]}`;
+}
+
+export function formatDateTime(timestamp: number) {
+	const date = new Date(timestamp * 1000);
+	const day = "0" + date.getDate();
+	const month = "0" + date.getMonth();
+	const year = date.getFullYear();
+
+	const formattedTime = day.substr(-2) + "-" + month.substr(-2) + ":" + year;
+	return formattedTime;
+}
 

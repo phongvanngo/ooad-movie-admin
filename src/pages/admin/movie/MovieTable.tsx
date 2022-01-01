@@ -59,11 +59,11 @@ export default function MovieList(): ReactElement {
 			dataIndex: "overview",
 
 		},
-		{
-			title: "Release Date",
-			dataIndex: "release_date",
-			width: "20%",
-		},
+		// {
+		// 	title: "Release Date",
+		// 	dataIndex: "release_date",
+		// 	width: "20%",
+		// },
 		{
 			title: "Action",
 			render: (text, record) => (
@@ -73,6 +73,7 @@ export default function MovieList(): ReactElement {
 					<Button
 						onClick={() => {
 							// dispatch(genreActions.setEditingGenre(genre));
+							dispatch(movieActions.setEditingMovie(record));
 							navigate(`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${record.id}`);
 						}}
 						key="delete-genre"
@@ -85,7 +86,6 @@ export default function MovieList(): ReactElement {
 						key="genre-item-delete"
 						onDelete={() => {
 							dispatch(movieActions.deleteMovie(record.id));
-							message.success("Xóa thành công");
 
 						}}
 					/>
@@ -113,18 +113,22 @@ export default function MovieList(): ReactElement {
 			form.setFieldsValue({ searchKeyword:params.query});
 		}
 		dispatch(movieActions.fetchMovieListFromTheMovieDB(params));
+		dispatch(movieActions.fetchMovieList());
+
 		window.scrollTo(0, 0);
 	}, [searchParams]);
 
 	const handleTableChange = (pagination) => {
 		const params = getParams();
 		console.log("params ne", params);
-		setSearchParams({ ...searchParams, query: params.query, page: pagination.current });
+		setSearchParams({ ...searchParams, page: pagination.current });
 	};
 
 	const handleSearchDebouce = (keyword) => {
 		setSearchParams({ ...searchParams, query: keyword });
 	};
+
+	console.log("data sources",movies);
 
 
 	const Header = (): ReactElement => {

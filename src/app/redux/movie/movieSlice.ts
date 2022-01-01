@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MovieModel } from "app/model/movie";
+import { MovieModel, MovieModelMapPattern } from "app/model/movie";
 import { DataResponse } from "app/model/PayloadResponse";
 import { AppRootState } from "../store";
 import { PaginationParams } from "app/model/PayloadResponse";
+import { MapVariable } from "app/utils/mapVariable";
 
 export interface LoginPayload {
     username: string;
@@ -18,7 +19,7 @@ export type TablePagination = {
 export interface MovieState {
     list: MovieModel[];
     loading: boolean;
-    editingMovie: MovieModel[];
+    editingMovie: MovieModel;
     pagination: TablePagination;
 }
 
@@ -39,6 +40,9 @@ const movieSlice = createSlice({
 	name: "movieList",
 	initialState,
 	reducers: {
+		setEditingMovie(state, action: PayloadAction<MovieModel>) {
+			state.editingMovie = action.payload;
+		},
 		fetchMovieList(state) {
 			state.loading = true;
 		},
@@ -46,16 +50,23 @@ const movieSlice = createSlice({
 			state.loading = false;
 		},
 		deleteMovie(state, action: PayloadAction<string>) {
+			state.loading = true;
+		},
+		deleteMovieSuccess(state, action: PayloadAction<string>) {
+			state.loading = false;
 			state.list = state.list.filter(
 				(movie) => movie.id !== action.payload,
 			);
+		},
+		deleteMovieFaield(state) {
+			state.loading = false;
 		},
 		fetchMovieListSuccess(
 			state,
 			action: PayloadAction<DataResponse<MovieModel[]>>,
 		) {
 			state.loading = false;
-			state.list = action.payload.data;
+			state.list = [...action.payload.data.map(e=>MapVariable<MovieModel>(e,MovieModelMapPattern)),...state.list];
 		},
 		fetchMovieListFromTheMovieDB(
 			state,

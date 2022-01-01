@@ -6,18 +6,34 @@ import { theMovieDBApi } from "app/api/theMovieDBApi";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { push } from "connected-react-router";
 import { ADMIN_ROUTE, APP_ROUTE } from "routes/routes.const";
+import { movieApi } from "app/api/movie";
+import { message } from "antd";
 
-// function* fetchMovieList() {
-// 	try {
-// 		const response: DataResponse<MovieModel[]> = yield call(
-// 			theMovieDBApi.movie.get,
-// 		);
-// 		yield put(movieActions.fetchMovieListSuccess(response));
-// 	} catch (error) {
-// 		console.log("Failed to fetch city list", error);
-// 		yield put(movieActions.fetchMovieListFailed());
-// 	}
-// }
+function* fetchMovieList() {
+	try {
+		const response: DataResponse<MovieModel[]> = yield call(
+			movieApi.getAll
+		);
+		yield put(movieActions.fetchMovieListSuccess(response));
+	} catch (error) {
+		console.log("Failed to fetch city list", error);
+		yield put(movieActions.fetchMovieListFailed());
+	}
+}
+function* deleteMovie(action: PayloadAction<string>) {
+	try {
+		const response: DataResponse<MovieModel[]> = yield call(
+			movieApi.delete,
+			action.payload
+		);
+		message.success("Xóa thành công");
+		yield put(movieActions.deleteMovieSuccess(action.payload));
+	} catch (error) {
+		console.log("Failed to fetch city list", error);
+		message.error(" Xóa thất bại");
+		yield put(movieActions.deleteMovieFaield());
+	}
+}
 function* fetchMovieListFromTheMovieDB(
 	action: PayloadAction<MovieSearchParams>,
 ) {
@@ -50,6 +66,14 @@ export default function* movieSaga() {
 	yield takeLatest(
 		movieActions.fetchMovieListFromTheMovieDB,
 		fetchMovieListFromTheMovieDB,
+	);
+	yield takeLatest(
+		movieActions.deleteMovie,
+		deleteMovie,
+	);
+	yield takeLatest(
+		movieActions.fetchMovieList,
+		fetchMovieList,
 	);
 	yield debounce(
 		500,

@@ -2,6 +2,7 @@ export interface MovieModel {
     id: string;
     adult: boolean;
     backdrop_path: string;
+    poster_path:string;
     budget: number;
     homepage: string;
     revenue: number;
@@ -18,23 +19,23 @@ export interface MovieModel {
 
 export interface MovieModelCamelCase {
     id: string,
-    adult: false,
     backdrop_path: string,
-    budget: number,
-    homepage: string,
-    originalLanguage: string,
+    title: string,
     originalTitle:string,
     overview: string,
     posterPath: string,
     releaseDate: string,
+    budget: number,
+    homepage: string,
+    isTVSeries: boolean,
+    adult: false,
+    genreIds: Array<string>,
+    originalLanguage: string,
     revenue: number,
-    title: string,
     voteAverage: number,
     voteCount: number,
     likeCount: number,
     viewCount: number,
-    genreIds: Array<string>,
-    isTVSeries: boolean,
 }
 
 export const MovieModelMapPattern= {

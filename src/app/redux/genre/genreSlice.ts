@@ -35,6 +35,20 @@ const genreSlice = createSlice({
 		fetchGenreListFailed(state) {
 			state.loading = false;
 		},
+		fetchAllGenreList(state) {
+			// fetch gerne from thinh movie and the movid db
+			state.loading = true;
+		},
+		fetchAllGenreListSuccess(
+			state,
+			action: PayloadAction<DataResponse<Genre[]>>,
+		) {
+			state.list = action.payload.data;
+			state.loading = false;
+		},
+		fetchAllGenreListFailed(state) {
+			state.loading = false;
+		},
 		fetchGenreListFromTheMovieDB(state) {
 			state.loading = true;
 		},
@@ -45,6 +59,8 @@ const genreSlice = createSlice({
 		fetchGenreListFromTheMovieDBFailed(state) {
 			state.loading = true;
 		},
+
+
 	},
 });
 

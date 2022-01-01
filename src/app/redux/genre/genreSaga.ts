@@ -31,8 +31,22 @@ function* fetchGenreListFromTheMovieDB() {
 		yield put(genreActions.fetchGenreListFromTheMovieDBFailed());
 	}
 }
+function* fetchAllGenreList() {
+	try {
+		const genre1: DataResponse<Genre[]> = yield call (genreApi.getAll);
+		const genre2: TheMovieDB_GenrePayload = yield call(
+			theMovieDBApi.genre.getAll,
+		);
+		const result : DataResponse<Genre[]> = {data:[...genre1.data, ...genre2.genres]}; 
+		yield put(genreActions.fetchAllGenreListSuccess(result));
+	} catch (error) {
+		console.log("Failed to fetch genre list", error);
+		yield put(genreActions.fetchAllGenreListFailed());
+	}
+}
 
 export default function* genreSaga() {
 	yield takeLatest(genreActions.fetchGenreListFromTheMovieDB, fetchGenreListFromTheMovieDB);
 	yield takeLatest(genreActions.fetchGenreList, fetchGenreList);
+	yield takeLatest(genreActions.fetchAllGenreList, fetchAllGenreList);
 }
