@@ -2,6 +2,7 @@ import { message, Spin } from "antd";
 import { commonApi } from "app/api/common";
 import { episodeApi } from "app/api/episode";
 import { Episode } from "app/model/episode";
+import ToggleInput from "components/common/ToggleInput";
 import UploadFile from "components/common/UploadFile";
 import VideoPlayer from "components/common/VideoPlayer";
 import React, { ReactElement, useEffect, useState } from "react";
@@ -54,7 +55,14 @@ export default function EpisodeDetail(): ReactElement {
 
 	return <div>
 		<div>
-			<h1>{episode.name}</h1>
+			<ToggleInput currentValue={episode.name} onSubmit={(data:string)=>{
+				const newEpisode = {
+					...episode,
+					name: data,
+				};
+				setEpisode(newEpisode);
+				updateEpsisode(newEpisode);
+			}}/>
 		</div>
 		<p className="font-bold">Upload Video</p>
 		<div>
