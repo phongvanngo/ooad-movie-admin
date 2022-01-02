@@ -8,6 +8,8 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import EpisodeList from "./EpisodeList";
 import movieDbApiConfig from "app/api/theMovieDBApi/config";
 import { ADMIN_ROUTE, APP_ROUTE } from "routes/routes.const";
+import { episodeApi } from "app/api/episode";
+import { Episode } from "app/model/episode";
 interface Props {
     movie?: string;
 }
@@ -17,7 +19,9 @@ export default function EpisodeManagementLayout(): ReactElement {
 	const [movie, setMovie] = useState<MovieModelCamelCase>();
 	const [selectedEpisodeId, setSelectedEpisodeId] = useState<string>();
 
-	const {episodeId} = useParams();
+	const [listEpisodes, setListEpisodes] = useState<Episode[]>();
+
+	const { episodeId } = useParams();
 
 	const navigate = useNavigate();
 	async function getDetailMovie(id: string) {
@@ -25,8 +29,51 @@ export default function EpisodeManagementLayout(): ReactElement {
 			const response = await movieApi.getById(id);
 			console.log(response);
 			setMovie(response.data);
+			setListEpisodes(response.data.episodes);
 		} catch (error) {
-			message.error("Đã có lỗi xảy ra");
+			message.error("Can not load the movie detail");
+		}
+	}
+	async function deleteEpisode(id: string) {
+		try {
+			const response = await episodeApi.delete(id);
+			console.log(response);
+			const newListEpisodes = listEpisodes.filter(
+				(episode) => episode.id !== id,
+			);
+			setListEpisodes(newListEpisodes);
+			message.success("Deleted Episode");
+		} catch (error) {
+			message.error("Something went wrong when delete episode");
+		}
+	}
+
+	async function handleCreateEpisode() {
+		try {
+			let ordinal = 0;
+			if (movie.episodes.length > 0) {
+				ordinal = movie.episodes[movie.episodes.length - 1].ordinal + 1;
+			}
+			const episodeToCreate: Partial<Episode> = {
+				name: "NEW EPISODE",
+				ordinal,
+				content: "no content",
+				movieId: movie.id,
+			};
+
+			const response = await episodeApi.add(episodeToCreate);
+			console.log("create episode", response);
+			const newEpisode = response.data;
+			setListEpisodes([...listEpisodes, newEpisode]);
+			window.location.reload();
+			navigate(
+				`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${movie.id}/episode/${newEpisode.id}`,
+			);
+
+			message.success("Created the episode");
+		} catch (error) {
+			console.log(error);
+			message.error("Something when wrong when create episode");
 		}
 	}
 
@@ -56,15 +103,22 @@ export default function EpisodeManagementLayout(): ReactElement {
 					<h1 className="text-3xl">{movie.title}</h1>
 					<p className="italic">List of episodes</p>
 					<EpisodeList
-						episodes={movie.episodes}
+						episodes={listEpisodes || []}
 						handleSelectEpisode={(id) => {
 							navigate(
 								`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${movie.id}/episode/${id}`,
 							);
 						}}
+						handleDeleteEpisode={deleteEpisode}
 						selectedEpisodeId={episodeId}
 					/>
-					<Button type="primary" icon={<PlusCircleOutlined />}>
+					<Button
+						onClick={() => {
+							handleCreateEpisode();
+						}}
+						type="primary"
+						icon={<PlusCircleOutlined />}
+					>
                         New Epispde
 					</Button>
 				</div>

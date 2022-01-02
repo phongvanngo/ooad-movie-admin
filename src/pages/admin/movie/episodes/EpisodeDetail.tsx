@@ -23,17 +23,17 @@ export default function EpisodeDetail(): ReactElement {
 			console.log(response);
 			setEpisode(response.data);
 		} catch (error) {
-			message.error("Đã có lỗi xảy ra");
+			message.error("Can not load the episode");
 		}
 	}
 
-	async function updateEpsisode(episode:Episode) {
+	async function updateEpsisode(episode: Episode) {
 		try {
 			const response = await episodeApi.update(episode);
 			console.log(response);
-			message.success(response.messsage);
+			message.success("Updated Episode");
 		} catch (error) {
-			message.error("Đã có lỗi xảy ra");
+			message.error("Updated episode failed");
 		}
 	}
 
@@ -46,43 +46,49 @@ export default function EpisodeDetail(): ReactElement {
 		getDetailEpisode(episodeId);
 	}, [episodeId]);
 
-	if (!episode) 
+	if (!episode)
 		return (
 			<div className="flex  content-center">
 				<Spin />
 			</div>
 		);
 
-	return <div>
+	return (
 		<div>
-			<ToggleInput currentValue={episode.name} onSubmit={(data:string)=>{
-				const newEpisode = {
-					...episode,
-					name: data,
-				};
-				setEpisode(newEpisode);
-				updateEpsisode(newEpisode);
-			}}/>
-		</div>
-		<p className="font-bold">Upload Video</p>
-		<div>
-			<UploadFile onComplete={(data)=>{
-				const newEpisode = {...episode,content:data};
-				setEpisode(newEpisode);
-				updateEpsisode(newEpisode);
-			}}/>
-		</div>
-		<div>
-			<div className="mt-5 max-w-md mx-auto">
-				<PlayVideo path={episode.content} />
+			<div className="text-2xl mt-5 uppercase">
+				<ToggleInput
+					currentValue={episode.name}
+					onSubmit={(data: string) => {
+						const newEpisode = {
+							...episode,
+							name: data,
+						};
+						setEpisode(newEpisode);
+						updateEpsisode(newEpisode);
+					}}
+				/>
+			</div>
+			<p className="font-bold">Upload Video</p>
+			<div>
+				<UploadFile
+					onComplete={(data) => {
+						const newEpisode = { ...episode, content: data };
+						setEpisode(newEpisode);
+						updateEpsisode(newEpisode);
+					}}
+				/>
+			</div>
+			<div>
+				<div className="mt-5 max-w-md mx-auto">
+					<PlayVideo path={episode.content} />
+				</div>
 			</div>
 		</div>
-	</div>;
+	);
 }
 
-
 interface PlayVideoProps {
-	path:string;
+    path: string;
 }
 
 function PlayVideo({ path }: PlayVideoProps): ReactElement {
@@ -93,9 +99,8 @@ function PlayVideo({ path }: PlayVideoProps): ReactElement {
 			const response = await commonApi.generateDownloadLink(path);
 			console.log(response);
 			setLink(response.data);
-			message.success(response.messsage);
 		} catch (error) {
-			message.error("Đã có lỗi xảy ra");
+			message.error("Something went wront when generate download link");
 		}
 	}
 
@@ -115,12 +120,11 @@ function PlayVideo({ path }: PlayVideoProps): ReactElement {
 		],
 	};
 
-
 	if (!link) return <div></div>;
 
 	return (
 		<div>
-			<VideoPlayer options={videoJsOptions}/>
+			<VideoPlayer options={videoJsOptions} />
 		</div>
 	);
 }
