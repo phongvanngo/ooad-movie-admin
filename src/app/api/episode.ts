@@ -7,6 +7,11 @@ export const episodeApi = {
 		const url = "/episodes?movieId="+id;
 		return axiosClient.get(url);
 	},
+	getById: (id:string): Promise<DataResponse<Episode>> => {
+		const url = "/episode?id="+id;
+		return axiosClient.get(url);
+	},
+	
 	add: (episode: Partial<Episode>): Promise<DataResponse<Episode>> => {
 		const url = "/episode";
 		return axiosClient.post(url, episode);

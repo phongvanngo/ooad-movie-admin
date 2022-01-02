@@ -16,6 +16,9 @@ export default function EpisodeManagementLayout(): ReactElement {
 	const { movieId } = useParams();
 	const [movie, setMovie] = useState<MovieModelCamelCase>();
 	const [selectedEpisodeId, setSelectedEpisodeId] = useState<string>();
+
+	const {episodeId} = useParams();
+
 	const navigate = useNavigate();
 	async function getDetailMovie(id: string) {
 		try {
@@ -26,6 +29,8 @@ export default function EpisodeManagementLayout(): ReactElement {
 			message.error("Đã có lỗi xảy ra");
 		}
 	}
+
+	console.log(selectedEpisodeId);
 
 	useEffect(() => {
 		getDetailMovie(movieId);
@@ -57,7 +62,7 @@ export default function EpisodeManagementLayout(): ReactElement {
 								`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${movie.id}/episode/${id}`,
 							);
 						}}
-						selectedEpisodeId={selectedEpisodeId}
+						selectedEpisodeId={episodeId}
 					/>
 					<Button type="primary" icon={<PlusCircleOutlined />}>
                         New Epispde
