@@ -46,16 +46,16 @@ export default function AppRoutes(): ReactElement {
 function RequireAuth({ children }: { children: JSX.Element }) {
 	const location = useLocation();
 
-	console.log("first location",location);
+	
 	const isLoggedIn = useSelector(
 		(state:AppRootState) => state.rootReducer.adminAuthThunk.isLoggedIn,
 	);
 
-	console.log(isLoggedIn);
+	
 
 	if (!isLoggedIn) {
 		return <Navigate to={APP_ROUTE.SIGN_IN} state={{ from: location }} />;
 	} 
-	console.log("auutttthhhhhhh",location);
+	
 	return children;
 }

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { message } from "antd";
 import { adminAuthApi } from "app/api/adminAuthApi";
 import { COOKIE_USER } from "app/constants";
 import { AdminModel } from "app/model/User";
@@ -31,7 +32,7 @@ const counterSlice = createSlice({
 					state.isLoggedIn = true;
 				}
 			} catch (error) {
-				console.log("reLogin error",error);
+				message.error(error);
 			}
 		},
 		signOut: (state:IAdminAuth) => {
@@ -46,13 +47,13 @@ export const { signInSuccess,signOut,reLogin } = counterSlice.actions;
 export const signIn = (ISignInPayload : ISignInPayload,callback:VoidFunction): AppThunk =>async (dispatch)=> {
 	try {
 		const response = await adminAuthApi.signIn(ISignInPayload) as ISignInResponsePayload;
-		console.log(response);
+		
 		if(response) {
 			dispatch(signInSuccess(response));
 			callback();
 		}
 	} catch (e) {
-		console.log("signInError",e);
+		message.error(e);
 	}
 };
 

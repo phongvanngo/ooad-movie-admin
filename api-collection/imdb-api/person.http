@@ -1,0 +1,24 @@
+@baseURL=https://api.themoviedb.org/3
+@apiKey=54aa709695ac2db22242917da035c1fa
+@movie_id=580489
+
+# Discover Person
+
+# @name Popular Person
+GET {{baseURL}}/person/popular?api_key={{apiKey}}
+
+###
+# @name SearchMovie
+GET {{baseURL}}/search/movie?api_key={{apiKey}}&query= 
+
+###
+
+# Movie Detail
+
+# @name GetMovieDetail
+GET {{baseURL}}/movie/{{movie_id}}?api_key={{apiKey}}
+
+###
+
+# @name Genre
+GET {{baseURL}}/genre/movie/list?api_key={{apiKey}}

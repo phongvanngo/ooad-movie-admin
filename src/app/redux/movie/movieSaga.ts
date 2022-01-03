@@ -16,7 +16,7 @@ function* fetchMovieList() {
 		);
 		yield put(movieActions.fetchMovieListSuccess(response));
 	} catch (error) {
-		console.log("Failed to fetch city list", error);
+		
 		yield put(movieActions.fetchMovieListFailed());
 	}
 }
@@ -29,7 +29,7 @@ function* deleteMovie(action: PayloadAction<string>) {
 		message.success("Xóa thành công");
 		yield put(movieActions.deleteMovieSuccess(action.payload));
 	} catch (error) {
-		console.log("Failed to fetch city list", error);
+		
 		message.error(" Xóa thất bại");
 		yield put(movieActions.deleteMovieFaield());
 	}
@@ -39,7 +39,7 @@ function* fetchMovieListFromTheMovieDB(
 ) {
 	let response: DataResponse<MovieModel[]>;
 	try {
-		console.log("action payload ne ",action.payload);
+		
 		if (action.payload.query !== undefined) {
 			response = yield call(
 				theMovieDBApi.movie.searchByName,
@@ -51,7 +51,7 @@ function* fetchMovieListFromTheMovieDB(
 
 		yield put(movieActions.fetchMovieListFromTheMovieDBSuccess(response));
 	} catch (error) {
-		console.log("Failed to fetch city list", error);
+		
 		yield put(movieActions.fetchMovieListFromTheMovieDBFailed());
 	}
 }

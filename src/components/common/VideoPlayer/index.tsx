@@ -29,7 +29,7 @@ const VideoPlayer: React.FC<IVideoPlayerProps> = ({ options }) => {
 			...initialOptions,
 			...options,
 		}).ready(function () {
-			// console.log('onPlayerReady', this);
+			// 
 		});
 		return () => {
 			if (player.current) {
@@ -38,7 +38,7 @@ const VideoPlayer: React.FC<IVideoPlayerProps> = ({ options }) => {
 		};
 	}, [options]);
 
-	console.log(options.sources[0].src);
+	
 
 	return <video ref={videoNode} className="video-js vjs-big-play-centered" />;
 };

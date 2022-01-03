@@ -24,7 +24,7 @@ export default function MovieManagementPage(): ReactElement {
 						<Form.Item noStyle name="searchKeyword">
 							<Input.Search
 								onChange={(e) => {
-									console.log(e.target.value);
+									
 									debouceSearch(e.target.value);
 								}}
 								className="mr-2"
@@ -40,7 +40,7 @@ export default function MovieManagementPage(): ReactElement {
 						type="primary"
 						className="ml-2"
 						onClick={() => {
-							console.log("hi");
+							
 							navigate(
 								`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE_CREATE}`,
 							);

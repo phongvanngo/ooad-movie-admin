@@ -8,7 +8,7 @@ import "./i18n";
 
 
 function App(): JSX.Element {
-	console.log("hello");
+	
 	const queryClient = new QueryClient();
 	return (
 		<QueryClientProvider client={queryClient}>

@@ -4,7 +4,7 @@ import { Container, Header, Main, Footer, Cards } from "components/_reference/";
 
 
 const Home: React.FC = () => {
-	console.log("hello");
+	
 	return (
 		<Container>
 			<Header />

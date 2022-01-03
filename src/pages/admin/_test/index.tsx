@@ -28,7 +28,7 @@ interface Props {
     title: string;
 }
 function MenuItem({ icon, title }: Props): ReactElement {
-	console.log(icon);
+	
 	return <>
 		{icon}
 	</>;

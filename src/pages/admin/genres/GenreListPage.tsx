@@ -23,7 +23,7 @@ export default function GenreList(): ReactElement {
 	const listGenreData = useAppSelector(selectGenreList);
 	const [listGenres, setListGenres] = useState<IGenreItem[]>(skeletonGenreList);
 	const [initLoading, setInitLoading] = useState(true);
-	console.log("int", listGenres);
+	
 	useEffect(() => {
 		if (!loading) {
 			setInitLoading(false);
@@ -70,7 +70,7 @@ export default function GenreList(): ReactElement {
 				<div className="flex items-center">
 					<Input.Search className="mr-2" placeholder="input search text" enterButton size="middle" loading={false} />
 					<Button type="primary" onClick={() => {
-						console.log("hi");
+						
 						navigate(`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.GENRE_CREATE}`);
 					}} icon={<PlusCircleOutlined />}>
 						CREATE

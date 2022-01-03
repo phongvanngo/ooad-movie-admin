@@ -20,7 +20,7 @@ export default function EpisodeDetail(): ReactElement {
 	async function getDetailEpisode(id: string) {
 		try {
 			const response = await episodeApi.getById(id);
-			console.log(response);
+			
 			setEpisode(response.data);
 		} catch (error) {
 			message.error("Can not load the episode");
@@ -30,7 +30,7 @@ export default function EpisodeDetail(): ReactElement {
 	async function updateEpsisode(episode: Episode) {
 		try {
 			const response = await episodeApi.update(episode);
-			console.log(response);
+			
 			message.success("Updated Episode");
 		} catch (error) {
 			message.error("Updated episode failed");
@@ -93,11 +93,11 @@ interface PlayVideoProps {
 
 function PlayVideo({ path }: PlayVideoProps): ReactElement {
 	const [link, setLink] = useState<string>();
-
+	
 	async function generateDownloadLink(path: string) {
 		try {
 			const response = await commonApi.generateDownloadLink(path);
-			console.log(response);
+			
 			setLink(response.data);
 		} catch (error) {
 			message.error("Something went wront when generate download link");
@@ -108,7 +108,7 @@ function PlayVideo({ path }: PlayVideoProps): ReactElement {
 		generateDownloadLink(path);
 	}, [path]);
 
-	console.log(link);
+	
 
 	const videoJsOptions = {
 		sources: [

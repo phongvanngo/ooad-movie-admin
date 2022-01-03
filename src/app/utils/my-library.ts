@@ -1,3 +1,4 @@
+
 export function setCookie(name: string, value: any, days = 2): void {
 	let expires = "";
 	if (days) {
@@ -44,7 +45,7 @@ export function formatDateTime(timestamp: number) {
 		const formattedTime = day.substr(-2) + "-" + month.substr(-2) + ":" + year;
 		return formattedTime;
 	} catch (error) {
-		console.log();	
+		console.log(error);
 	}
 }
 
@@ -95,6 +96,7 @@ export function filterArrayBySearchTerm(myArray:any, searchTerm:string):any {
 			}
 		} catch (error) {
 			console.log(error);
+
 		}
 	}
 	return res;

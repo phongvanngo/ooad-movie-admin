@@ -5,12 +5,14 @@ import adminAuthThunk from "./slices/adminAuthThunk";
 import adminAuth from "./adminAuth/slice";
 import movie from "./movie/movieSlice";
 import genre from "./genre/genreSlice";
+import person from "./person/personSlice";
 const rootReducer = combineReducers({ 
 	counter,
 	adminAuthThunk, 
 	adminAuth,
 	movie,
-	genre
+	genre,
+	person,
 });
 
 

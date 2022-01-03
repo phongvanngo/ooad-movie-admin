@@ -40,11 +40,6 @@ export default function MovieList({ searchTerm }: Props): ReactElement {
 		searchTerm,
 	) as MovieModel[];
 
-	console.log(
-		"MapVariable",
-		movies[0],
-		MapVariable(movies[0], MovieModelMapPattern),
-	);
 
 	const columns = [
 		{

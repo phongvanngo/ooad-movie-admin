@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IMenuItem, menus } from "./options";
 const { SubMenu } = Menu;
 export default function SidebarMenu(): ReactElement {
-	console.log(menus);
+	
 	function MenuItem({ option, ...res }: { option: IMenuItem }): ReactElement {
 		if (option.subMenu) return (
 			<SubMenu title={option.title} key={option.key} icon={<option.icon />} {...res}>

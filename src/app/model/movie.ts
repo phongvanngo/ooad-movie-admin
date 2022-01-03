@@ -17,6 +17,7 @@ export interface MovieModel {
     overview:string;
     original_title:string;
     video: boolean;
+    episodes: Array<Episode>
 }
 
 export interface MovieModelCamelCase {
@@ -29,7 +30,7 @@ export interface MovieModelCamelCase {
     releaseDate: string,
     budget: number,
     homepage: string,
-    isTVSeries: boolean,
+    is_tv_series: boolean,
     adult: false,
     genreIds: Array<string>,
     originalLanguage: string,
@@ -42,14 +43,16 @@ export interface MovieModelCamelCase {
 }
 
 export const MovieModelMapPattern= {
-	release_date : "releaseDate",
-	releaseDate:"release_date",
-	poster_path:"posterPath",
-	posterPath:"poster_path",
-	genreIds:"genre_ids",
-	genre_ids:"genreIds",
-	original_title:"originalTitle",
-	originalTitle:"original_title",
+	// release_date : "release_date",
+	// releaseDate:"release_date",
+	// poster_path:"posterPath",
+	// posterPath:"poster_path",
+	// genreIds:"genre_ids",
+	// genre_ids:"genreIds",
+	// original_title:"originalTitle",
+	// originalTitle:"original_title",
+	is_tv_series:"isTVSeries",
+	back_drop_path:"backdrop_path"
 };
 
 

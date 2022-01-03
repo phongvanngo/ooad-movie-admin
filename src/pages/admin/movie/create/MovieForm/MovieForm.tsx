@@ -37,7 +37,7 @@ export default function MovieForm({
 			...values,
 		
 		};
-		console.log(movie);
+		
 		onSubmit(movie);
 	};
 
@@ -52,7 +52,7 @@ export default function MovieForm({
 				backdrop_path: initialValue.backdrop_path,
 				title: initialValue.title,
 				original_title: initialValue.original_title,
-				overview: initialValue.overview.slice(0,255),
+				overview: initialValue.overview.slice(0,1000),
 				poster_path: initialValue.poster_path,
 				release_date: converDate(initialValue.release_date),
 				budget: initialValue.budget,
@@ -73,7 +73,7 @@ export default function MovieForm({
 		try {
 			const res = await theMovieDBApi.movie.getById(id);
 			const movie_detail: MovieModel = res as MovieModel;
-			console.log(res);
+			
 			form.setFieldsValue({
 				// id: movie_detail.id,
 				backdrop_path: movie_detail.backdrop_path,

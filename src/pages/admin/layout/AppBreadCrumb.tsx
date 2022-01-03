@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 
 export default function AppBreadcrumb(): ReactElement {
 	const location = useLocation();
-	console.log(location);
+	
 	const { pathname } = location;
 	const pathnames = pathname.split("/").filter(item=>item);
-	console.log(pathnames);
+	
 	if (pathnames.length === 1 ) return (
 		<div style={{ margin: "16px 0" }}></div>
 	);

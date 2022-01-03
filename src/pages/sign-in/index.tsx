@@ -15,7 +15,7 @@ function LoginPage():JSX.Element {
 	
 	const state = location.state as { from: Location };
 	const from = state ? state.from.pathname : "/";
-	console.log("location",location);
+	
 	
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -31,11 +31,11 @@ function LoginPage():JSX.Element {
 	}
 	useEffect(() => {
 		if (isLoggedIn) {
-			console.log("navigate", from);
+			
 			navigate(from, { replace: true });
 		}
 	}, []);
-	console.log(isLoggedIn);
+	
 	
 	return (
 		<div>

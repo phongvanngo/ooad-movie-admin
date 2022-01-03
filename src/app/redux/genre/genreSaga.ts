@@ -14,7 +14,7 @@ function* fetchGenreList() {
 		);
 		yield put(genreActions.fetchGenreListSuccess(response));
 	} catch (error) {
-		console.log("Failed to fetch student list", error);
+		
 		yield put(genreActions.fetchGenreListFailed());
 	}
 }
@@ -27,7 +27,7 @@ function* fetchGenreListFromTheMovieDB() {
 		const result : DataResponse<Genre[]> = {data:response.genres}; 
 		yield put(genreActions.fetchGenreListFromTheMovieDBSuccess(result));
 	} catch (error) {
-		console.log("Failed to fetch student list", error);
+		
 		yield put(genreActions.fetchGenreListFromTheMovieDBFailed());
 	}
 }
@@ -40,7 +40,7 @@ function* fetchAllGenreList() {
 		const result : DataResponse<Genre[]> = {data:[...genre1.data, ...genre2.genres]}; 
 		yield put(genreActions.fetchAllGenreListSuccess(result));
 	} catch (error) {
-		console.log("Failed to fetch genre list", error);
+		
 		yield put(genreActions.fetchAllGenreListFailed());
 	}
 }

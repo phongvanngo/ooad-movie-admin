@@ -1,6 +1,6 @@
 import { Button, Image, message } from "antd";
 import { movieApi } from "app/api/movie";
-import { MovieModel, MovieModelCamelCase } from "app/model/movie";
+import { MovieModel, MovieModelCamelCase, MovieModelMapPattern } from "app/model/movie";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Navigate, Outlet, useNavigate, useParams } from "react-router-dom";
 import { Spin } from "antd";
@@ -10,13 +10,14 @@ import movieDbApiConfig from "app/api/theMovieDBApi/config";
 import { ADMIN_ROUTE, APP_ROUTE } from "routes/routes.const";
 import { episodeApi } from "app/api/episode";
 import { Episode } from "app/model/episode";
+import { MapVariable } from "app/utils/mapVariable";
 interface Props {
     movie?: string;
 }
 
 export default function EpisodeManagementLayout(): ReactElement {
 	const { movieId } = useParams();
-	const [movie, setMovie] = useState<MovieModelCamelCase>();
+	const [movie, setMovie] = useState<MovieModel>();
 	const [selectedEpisodeId, setSelectedEpisodeId] = useState<string>();
 
 	const [listEpisodes, setListEpisodes] = useState<Episode[]>();
@@ -27,8 +28,8 @@ export default function EpisodeManagementLayout(): ReactElement {
 	async function getDetailMovie(id: string) {
 		try {
 			const response = await movieApi.getById(id);
-			console.log(response);
-			setMovie(response.data);
+			const movieDetail = MapVariable<MovieModel>(response.data,MovieModelMapPattern);
+			setMovie(movieDetail);
 			setListEpisodes(response.data.episodes);
 		} catch (error) {
 			message.error("Can not load the movie detail");
@@ -37,7 +38,7 @@ export default function EpisodeManagementLayout(): ReactElement {
 	async function deleteEpisode(id: string) {
 		try {
 			const response = await episodeApi.delete(id);
-			console.log(response);
+			
 			const newListEpisodes = listEpisodes.filter(
 				(episode) => episode.id !== id,
 			);
@@ -62,22 +63,22 @@ export default function EpisodeManagementLayout(): ReactElement {
 			};
 
 			const response = await episodeApi.add(episodeToCreate);
-			console.log("create episode", response);
+			
 			const newEpisode = response.data;
 			setListEpisodes([...listEpisodes, newEpisode]);
-			window.location.reload();
+			// window.location.reload();
 			navigate(
 				`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.MOVIE}/${movie.id}/episode/${newEpisode.id}`,
 			);
 
 			message.success("Created the episode");
 		} catch (error) {
-			console.log(error);
+			
 			message.error("Something when wrong when create episode");
 		}
 	}
 
-	console.log(selectedEpisodeId);
+	
 
 	useEffect(() => {
 		getDetailMovie(movieId);
@@ -96,11 +97,12 @@ export default function EpisodeManagementLayout(): ReactElement {
 					<Image
 						preview
 						height={200}
-						src={movieDbApiConfig.originalImage(movie.posterPath)}
+						src={movieDbApiConfig.originalImage(movie.poster_path)}
 					/>{" "}
 				</div>
 				<div>
 					<h1 className="text-3xl">{movie.title}</h1>
+					<p className="">{movie.overview}</p>
 					<p className="italic">List of episodes</p>
 					<EpisodeList
 						episodes={listEpisodes || []}

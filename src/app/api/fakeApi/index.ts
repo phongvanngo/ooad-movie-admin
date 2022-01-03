@@ -11,9 +11,7 @@ type Option = {
 export const callAPI = async (url:string, options:Option): Promise<any> => {
 	const { time, response, status, data } = options;
 	return new Promise((resolve, reject) => {
-		console.log(
-			`✈️✈️ Fake API called url ${url},request: ${data}, response: ${response} `,
-		);
+	
 		setTimeout(() => {
 			switch (status) {
 			case ResponseStatus.s200:

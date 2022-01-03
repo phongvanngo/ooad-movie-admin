@@ -8,7 +8,7 @@ export const movieApi = {
 		const url = "/movies";
 		return axiosClient.get(url);
 	},
-	getById: (id: string): Promise<DataResponse<MovieModelCamelCase>> => {
+	getById: (id: string): Promise<DataResponse<MovieModel>> => {
 		const url = "/movie?id="+id;
 		return axiosClient.get(url);
 	},
