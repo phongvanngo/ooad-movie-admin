@@ -6,6 +6,7 @@ import adminAuth from "./adminAuth/slice";
 import movie from "./movie/movieSlice";
 import genre from "./genre/genreSlice";
 import person from "./person/personSlice";
+import discount from "./discount/discountSlice";
 const rootReducer = combineReducers({ 
 	counter,
 	adminAuthThunk, 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	movie,
 	genre,
 	person,
+	discount
 });
 
 

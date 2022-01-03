@@ -9,4 +9,9 @@ export const ADMIN_ROUTE = {
 	MOVIE_CREATE:"/movie/create",
 	GENRE:"/genre",
 	GENRE_CREATE:"/genre/create",
+	DISCOUNT_CREATE:"/discount/create",
+	DISCOUNT:"/discount",
+	CAST:"/cast",
+	CAST_CREATE:"/cast/create",
+	PLAN:"/plan",
 };

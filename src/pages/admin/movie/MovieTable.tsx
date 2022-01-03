@@ -65,8 +65,16 @@ export default function MovieList({ searchTerm }: Props): ReactElement {
 			width: "20%",
 		},
 		{
+			ellipsis: true,
 			title: "Overview",
 			dataIndex: "overview",
+			render: (overview) => (
+				<>
+					<Tooltip placement="topLeft" title={overview}>
+						<span>{overview}</span>
+					</Tooltip>
+				</>
+			),
 		},
 		{
 			title: "Type",
@@ -152,6 +160,7 @@ export default function MovieList({ searchTerm }: Props): ReactElement {
 		<div>
 			<Table
 				columns={columns}
+				scroll={{ x: 1500 }}
 				rowKey={(record) => record.id}
 				dataSource={currentListMovie}
 				pagination={{ pageSize: 5 }}

@@ -101,3 +101,24 @@ export function filterArrayBySearchTerm(myArray:any, searchTerm:string):any {
 	}
 	return res;
 }
+
+export function convertDateTime(myDate:number):string {
+	// date to dd/mm/yyyy
+	const date = new Date(myDate);
+	console.log(date);
+	const month = date.getMonth() + 1;
+	const day = date.getDate();
+	const year = date.getFullYear();
+	const output = day + "/" + month + "/" + year;
+	return output;
+}
+
+export function convertDateTimeForPostData(date:any):string {
+	const time = new Date(date);
+	const yy = time.getFullYear();
+	const mm = time.getMonth();
+	const dd =  time.getDate();
+	return `${dd}/${mm}/${yy}`;
+
+
+}
