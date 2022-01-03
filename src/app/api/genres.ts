@@ -16,7 +16,7 @@ export const genreApi = {
 		return axiosClient.put(url, genre);
 	},
 	delete: (id: string): Promise<DataResponse<any>> => {
-		const url = "/genre";
-		return axiosClient.delete(url, { data: id });
+		const url = "/genre?id=" + id;
+		return axiosClient.delete(url);
 	},
 };

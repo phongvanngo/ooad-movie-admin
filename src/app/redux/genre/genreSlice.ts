@@ -1,25 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { message } from "antd";
 import { Genre } from "app/model/genre";
 import { DataResponse } from "app/model/PayloadResponse";
 import { AppRootState } from "../store";
 
 export interface GenreState {
-    loading: boolean;
-    list: Genre[];
-	editingGenre:Genre;
+	loading: boolean;
+	list: Genre[];
+	editingGenre: Genre;
 }
 
 const initialState: GenreState = {
 	loading: false,
 	list: [],
-	editingGenre:null,
+	editingGenre: null,
 };
 
 const genreSlice = createSlice({
 	name: "genre",
 	initialState,
 	reducers: {
-		setEditingGenre(state,action:PayloadAction<Genre>) {
+		setEditingGenre(state, action: PayloadAction<Genre>) {
 			state.editingGenre = action.payload;
 		},
 		fetchGenreList(state) {
@@ -29,7 +30,7 @@ const genreSlice = createSlice({
 			state,
 			action: PayloadAction<DataResponse<Genre[]>>,
 		) {
-			state.list = action.payload.data;
+			state.list = action.payload.data.reverse();
 			state.loading = false;
 		},
 		fetchGenreListFailed(state) {
@@ -52,13 +53,26 @@ const genreSlice = createSlice({
 		fetchGenreListFromTheMovieDB(state) {
 			state.loading = true;
 		},
-		fetchGenreListFromTheMovieDBSuccess(state,action:PayloadAction<DataResponse<Genre[]>>) {
-			state.list = [...state.list,...action.payload.data];
+		fetchGenreListFromTheMovieDBSuccess(state, action: PayloadAction<DataResponse<Genre[]>>) {
+			state.list = [...state.list, ...action.payload.data];
 			state.loading = false;
 		},
 		fetchGenreListFromTheMovieDBFailed(state) {
 			state.loading = true;
 		},
+		deleteGenre(state, action: PayloadAction<string>) {
+			state.loading = true;
+		},
+		deleteGenreSuccess(state, action: PayloadAction<string>) {
+			state.loading = false;
+			console.log(action.payload);
+			state.list = state.list.filter(genre => genre.id !== action.payload);
+			message.success("Delete Genre Successfully");
+		},
+		deleteGenreFailed(state) {
+			state.loading = false;
+			message.error("Delete Genre Failed");
+		}
 
 
 	},

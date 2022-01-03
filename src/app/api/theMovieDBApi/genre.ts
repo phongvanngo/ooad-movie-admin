@@ -11,4 +11,8 @@ export const genre = {
 		const url = `/genre/movie/list?api_key=${THEMOVIEDB_API_KEY}`;
 		return axiosClient.get(url, { baseURL: THEMOVIEDB_BASEURL });
 	},
+	getAllTVGenres: (): Promise<TheMovieDB_GenrePayload> => {
+		const url = `/genre/tv/list?api_key=${THEMOVIEDB_API_KEY}`;
+		return axiosClient.get(url, { baseURL: THEMOVIEDB_BASEURL });
+	},
 };

@@ -79,7 +79,7 @@ export default function MovieForm({
 				backdrop_path: movie_detail.backdrop_path,
 				title: movie_detail.title,
 				original_title: movie_detail.original_title,
-				overview: movie_detail.overview.slice(0, 255),
+				overview: movie_detail.overview.slice(0, 1000),
 				poster_path: movie_detail.poster_path,
 				release_date: converDate(movie_detail.release_date),
 				budget: movie_detail.budget,

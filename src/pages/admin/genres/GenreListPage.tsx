@@ -1,29 +1,48 @@
-import {
-	PlusCircleOutlined
-} from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Input, List } from "antd";
 import { Genre } from "app/model/genre";
-import { genreActions, selectGenreList, selectGenreLoading } from "app/redux/genre/genreSlice";
+import {
+	genreActions,
+	selectGenreList,
+	selectGenreLoading,
+} from "app/redux/genre/genreSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
-import React, { ReactElement, useEffect, useState } from "react";
+import { filterArrayBySearchTerm } from "app/utils/my-library";
+import { debounce, filter } from "lodash";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ADMIN_ROUTE, APP_ROUTE } from "routes/routes.const";
 import GenreItem from "./GenreItem";
 
 export interface IGenreItem extends Genre {
-	loading?: boolean;
+    loading?: boolean;
 }
 
-const skeletonGenreList: IGenreItem[] = [... new Array(5)].map(() => ({ loading: true, id: "", name: "" }));
+const skeletonGenreList: IGenreItem[] = [...new Array(5)].map(() => ({
+	loading: true,
+	id: "",
+	name: "",
+}));
 
 export default function GenreList(): ReactElement {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const loading = useAppSelector(selectGenreLoading);
 	const listGenreData = useAppSelector(selectGenreList);
-	const [listGenres, setListGenres] = useState<IGenreItem[]>(skeletonGenreList);
+	const [listGenres, setListGenres] =
+        useState<IGenreItem[]>(skeletonGenreList);
 	const [initLoading, setInitLoading] = useState(true);
-	
+
+	const debouceSearch = useCallback(
+		debounce((listGenres, nextValue) => {
+			console.log(listGenres, nextValue);
+			setListGenres(filterArrayBySearchTerm(listGenres, nextValue));
+		}, 100),
+		[],
+	);
+
+	const [keyword, setKeyword] = useState<string>();
+
 	useEffect(() => {
 		if (!loading) {
 			setInitLoading(false);
@@ -47,39 +66,59 @@ export default function GenreList(): ReactElement {
 	};
 
 	const loadMore =
-		!initLoading && !loading ? (
-			<div
-				style={{
-					textAlign: "center",
-					marginTop: 12,
-					height: 32,
-					lineHeight: "32px",
-				}}
-			>
+        !initLoading && !loading ? (
+        	<div
+        		style={{
+        			textAlign: "center",
+        			marginTop: 12,
+        			height: 32,
+        			lineHeight: "32px",
+        		}}
+        	>
+        		<Button
+        			onClick={() => {
+        				onLoadMore();
+        			}}
+        		>
+                    LOAD MORE
+        		</Button>
+        	</div>
+        ) : null;
 
-				<Button onClick={() => { onLoadMore(); }}>LOAD MORE</Button>
-			</div>
-		) : null;
 
 	const Header = (): ReactElement => {
 		return (
 			<div className="w-full flex justify-between items-center">
-				<div className="text-lg font-bold">
-					GENRES
-				</div>
+				<div className="text-lg font-bold">GENRES</div>
 				<div className="flex items-center">
-					<Input.Search className="mr-2" placeholder="input search text" enterButton size="middle" loading={false} />
-					<Button type="primary" onClick={() => {
-						
-						navigate(`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.GENRE_CREATE}`);
-					}} icon={<PlusCircleOutlined />}>
-						CREATE
+					<Input.Search
+						className="mr-2"
+						placeholder="input search text"
+						enterButton
+						size="middle"
+						loading={false}
+						value={keyword}
+						autoFocus
+						onChange={(e) => {
+							setKeyword(e.target.value);
+							debouceSearch(listGenreData, e.target.value);
+						}}
+					/>
+					<Button
+						type="primary"
+						onClick={() => {
+							navigate(
+								`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.GENRE_CREATE}`,
+							);
+						}}
+						icon={<PlusCircleOutlined />}
+					>
+                        CREATE
 					</Button>
 				</div>
 			</div>
 		);
 	};
-
 
 	return (
 		<div>
@@ -89,12 +128,8 @@ export default function GenreList(): ReactElement {
 				loading={initLoading}
 				itemLayout="horizontal"
 				dataSource={listGenres}
-				loadMore={loadMore}
-				renderItem={item =>
-					(
-						<GenreItem genre={item} />
-					)
-				}
+				// loadMore={loadMore}
+				renderItem={(item) => <GenreItem genre={item} />}
 			/>
 		</div>
 	);

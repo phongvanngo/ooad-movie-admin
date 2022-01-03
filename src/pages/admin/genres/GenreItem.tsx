@@ -30,7 +30,7 @@ export default function GenreItem({genre}: Props): ReactElement {
 				<ButtonItemDelete
 					message="Are your sure ?"
 					key="genre-item-delete"
-					onDelete={() => { console.log("delete"); }}
+					onDelete={() => { dispatch(genreActions.deleteGenre(genre.id)); }}
 				/>]}
 		>
 			<Skeleton avatar title={false} active loading={genre.loading}>

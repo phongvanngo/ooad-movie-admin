@@ -1,3 +1,4 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import { genreApi } from "app/api/genres";
 import { theMovieDBApi } from "app/api/theMovieDBApi";
 import { TheMovieDB_GenrePayload } from "app/api/theMovieDBApi/genre";
@@ -16,6 +17,17 @@ function* fetchGenreList() {
 	} catch (error) {
 		
 		yield put(genreActions.fetchGenreListFailed());
+	}
+}
+function* deleteGenre(action:PayloadAction<string>) {
+	try {
+		const response = yield call(
+			genreApi.delete,
+			action.payload
+		);
+		yield put(genreActions.deleteGenreSuccess(action.payload));
+	} catch (error) {
+		yield put(genreActions.deleteGenreFailed());
 	}
 }
 function* fetchGenreListFromTheMovieDB() {
@@ -49,4 +61,5 @@ export default function* genreSaga() {
 	yield takeLatest(genreActions.fetchGenreListFromTheMovieDB, fetchGenreListFromTheMovieDB);
 	yield takeLatest(genreActions.fetchGenreList, fetchGenreList);
 	yield takeLatest(genreActions.fetchAllGenreList, fetchAllGenreList);
+	yield takeLatest(genreActions.deleteGenre, deleteGenre);
 }

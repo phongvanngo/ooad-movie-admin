@@ -10,7 +10,7 @@ export default function MovieManagementPage(): ReactElement {
 	const navigate = useNavigate();
 	const [keyword, setKeyword] = useState<string>();
 	const debouceSearch = useCallback(
-		debounce((nextValue) => setKeyword(nextValue), 1000),
+		debounce((nextValue) => setKeyword(nextValue), 100),
 		[],
 	);
 
@@ -30,6 +30,7 @@ export default function MovieManagementPage(): ReactElement {
 								className="mr-2"
 								placeholder="input search text"
 								enterButton
+								autoFocus
 								size="middle"
 								loading={false}
 							/>

@@ -1,0 +1,8 @@
+@baseURL=https://api.themoviedb.org/3
+@apiKey=54aa709695ac2db22242917da035c1fa
+@movie_id=580489 
+
+# Discover Movies
+
+# @name GetDiscoverGenre
+GET {{baseURL}}/genre/movie/list?api_key={{apiKey}}&page=6
