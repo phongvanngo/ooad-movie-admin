@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { adminAuthApi } from "app/api/adminAuthApi";
+import { authApi } from "app/api/authApi";
 import { COOKIE_USER } from "app/constants";
+import { AuthRequestPayload, AuthResponsePayload, DataResponse } from "app/model/PayloadResponse";
 import { AdminModel } from "app/model/User";
 import { AppRootState, AppThunk } from "app/redux/store";
 import { getCookie, removeCookie, setCookie } from "app/utils/cookie";
@@ -15,13 +17,13 @@ const initialState: IAdminAuth = {
 	isLoggedIn:undefined
 };
 
-const counterSlice = createSlice({
+const adminAuthThunkSlice = createSlice({
 	name: "adminAuthThunk",
 	initialState,
 	reducers: {
-		signInSuccess: (state: IAdminAuth,action : PayloadAction<ISignInResponsePayload>) => {
+		signInSuccess: (state: IAdminAuth,action : PayloadAction<AuthResponsePayload>) => {
 			const user = {} as AdminModel;
-			user.token = action.payload.token;
+			user.token = action.payload.accessToken;
 			setCookie(COOKIE_USER,JSON.stringify(user));
 			state.isLoggedIn = true;
 		},
@@ -42,18 +44,21 @@ const counterSlice = createSlice({
 	},
 });
 
-export const { signInSuccess,signOut,reLogin } = counterSlice.actions;
+export const { signInSuccess,signOut,reLogin } = adminAuthThunkSlice.actions;
 
-export const signIn = (ISignInPayload : ISignInPayload,callback:VoidFunction): AppThunk =>async (dispatch)=> {
+export const signIn = (signInPayload : AuthRequestPayload,callback:VoidFunction): AppThunk =>async (dispatch,ThunkApi)=> {
+	console.log(ThunkApi);
 	try {
-		const response = await adminAuthApi.signIn(ISignInPayload) as ISignInResponsePayload;
+		const response: DataResponse<AuthResponsePayload> = await authApi.login(signInPayload) ;
 		
 		if(response) {
-			dispatch(signInSuccess(response));
+			dispatch(signInSuccess(response.data));
 			callback();
 		}
 	} catch (e) {
-		message.error(e);
+		message.error("Can not sign in!");
+	} finally {
+		console.log();
 	}
 };
 
@@ -64,4 +69,4 @@ export const selectIsLoggedIn = (state: AppRootState) =>
 
 
 
-export default counterSlice.reducer;
+export default adminAuthThunkSlice.reducer;

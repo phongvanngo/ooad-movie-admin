@@ -17,3 +17,12 @@ export interface DataResponse<T> extends MetaField,Partial<PaginationParams> {
     results?:T
 }
 
+export interface AuthResponsePayload {
+    accessToken:string;
+    refreshToken:string;
+}
+
+export interface AuthRequestPayload {
+    username:string;
+    password:string;
+}
