@@ -1,7 +1,9 @@
 
-import { BASE_URL_API } from "app/constants";
+import { BASE_URL_API, COOKIE_USER } from "app/constants";
+import { getCookie } from "app/utils/cookie";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import queryString from "query-string";
+import { AdminModel } from "app/model/User";
 
 const axiosClient = axios.create({
 	baseURL: BASE_URL_API,
@@ -14,7 +16,12 @@ const axiosClient = axios.create({
 // Add a request interceptor
 axiosClient.interceptors.request.use(function (config: AxiosRequestConfig) {
 	// Do something before request is sent
-	const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl0sImlzcyI6Imh0dHBzOi8vaG91c2luZy1tb3ZpZS5oZXJva3VhcHAuY29tL2xvZ2luIiwiZXhwIjoxNjQxMjkyMTM2fQ.c448VsF7aPqmkfyZGykNTp_61LN2yI4LR0aMUUUuu7M";
+	let token;
+	const adminUser = getCookie(COOKIE_USER);
+	if(adminUser) {
+		const user: AdminModel = JSON.parse(adminUser);
+		token = user.token;
+	}
 	config.headers.Authorization = `Bearer ${token}`;
 	return config;
 }, function (error) {

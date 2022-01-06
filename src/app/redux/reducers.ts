@@ -7,14 +7,17 @@ import movie from "./movie/movieSlice";
 import genre from "./genre/genreSlice";
 import person from "./person/personSlice";
 import discount from "./discount/discountSlice";
-const rootReducer = combineReducers({ 
+import plan from "./plan/planSlice";
+const rootReducer = combineReducers({
 	counter,
-	adminAuthThunk, 
+	adminAuthThunk,
 	adminAuth,
 	movie,
 	genre,
 	person,
-	discount
+	discount,
+	plan
+
 });
 
 

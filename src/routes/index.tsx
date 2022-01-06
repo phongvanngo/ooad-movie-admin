@@ -1,6 +1,7 @@
 import { reLogin } from "app/redux/actions";
 import { selectIsLoggedIn } from "app/redux/slices/adminAuthThunk";
 import { useAppDispatch,AppRootState, useAppSelector } from "app/redux/store";
+import PageLoader from "components/common/PageLoader";
 import NotFoundPage from "pages/notfound";
 import React, { ReactElement, Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -20,7 +21,7 @@ export default function AppRoutes(): ReactElement {
 	}, []);
 	// if (isLoggedIn === undefined) return <div>Loading</div>;
 	return (
-		<Suspense fallback={<div>loading</div>}>
+		<Suspense fallback={<PageLoader />}>
 			<Router>
 				<Routes>
 					<Route>

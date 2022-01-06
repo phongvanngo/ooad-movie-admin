@@ -4,9 +4,9 @@ import { debounce } from "lodash";
 import React, { ReactElement, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ADMIN_ROUTE, APP_ROUTE } from "routes/routes.const";
-import DiscountTable from "./DiscountTable";
+import PlanTable from "./PlanTable";
 
-export default function DiscountManagementPage(): ReactElement {
+export default function PlanManagementPage(): ReactElement {
 	const navigate = useNavigate();
 	const [keyword, setKeyword] = useState<string>();
 	const debouceSearch = useCallback(
@@ -18,7 +18,7 @@ export default function DiscountManagementPage(): ReactElement {
 	const Header = (): ReactElement => {
 		return (
 			<div className="w-full flex justify-between items-center mb-5">
-				<div className="text-lg font-bold">DISCOUNTS</div>
+				<div className="text-lg font-bold">PLANS</div>
 				<div className="flex items-center">
 					<Form form={form}>
 						<Form.Item noStyle name="searchKeyword">
@@ -36,7 +36,7 @@ export default function DiscountManagementPage(): ReactElement {
 						</Form.Item>
 					</Form>
 
-					<Button
+					{/* <Button
 						type="primary"
 						className="ml-2"
 						onClick={() => {
@@ -47,7 +47,7 @@ export default function DiscountManagementPage(): ReactElement {
 						icon={<PlusCircleOutlined />}
 					>
                         CREATE
-					</Button>
+					</Button> */}
 				</div>
 			</div>
 		);
@@ -56,7 +56,7 @@ export default function DiscountManagementPage(): ReactElement {
 	return (
 		<div>
 			<Header />
-			<DiscountTable searchTerm={keyword} />
+			<PlanTable searchTerm={keyword} />
 		</div>
 	);
 }

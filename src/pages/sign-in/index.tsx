@@ -1,5 +1,5 @@
-import { AppRootState } from "app/redux/store";
-import { signIn } from "app/redux/slices/adminAuthThunk";
+import { AppRootState, useAppSelector } from "app/redux/store";
+import { selectIsSigning, signIn } from "app/redux/slices/adminAuthThunk";
 import { ISignInPayload } from "app/redux/slices/adminAuthThunk/types";
 import { useAppDispatch } from "app/redux/store";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import { Button, Checkbox, Form, Input } from "antd";
 import { AuthRequestPayload } from "app/model/PayloadResponse";
+import PageLoader from "components/common/PageLoader";
 
 const layout = {
 	labelCol: { span: 4 },
@@ -31,6 +32,7 @@ function LoginPage(): JSX.Element {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const loading = useAppSelector(selectIsSigning);
 	const isLoggedIn = useSelector(
 		(state: AppRootState) => state.rootReducer.adminAuthThunk.isLoggedIn,
 	);
@@ -57,10 +59,13 @@ function LoginPage(): JSX.Element {
 	}, []);
 
 	return (
-		<div >
+		<div>
+			
 			<div className="max-w-md p-5 mx-auto">
 				<div className="shadow-sm p-5 bg-gray-200">
-					<h1 className="font-bold text-center text-xl">OOMOVIE ADMINPAGE</h1>
+					<h1 className="font-bold text-center text-xl">
+                        OOMOVIE ADMINPAGE
+					</h1>
 					<Form
 						name="basic"
 						labelCol={{ span: 8 }}
@@ -97,7 +102,7 @@ function LoginPage(): JSX.Element {
 						</Form.Item>
 
 						<Form.Item
-						// name="remember"
+							// name="remember"
 							valuePropName="checked"
 							wrapperCol={{ offset: 8, span: 16 }}
 						>
@@ -105,8 +110,8 @@ function LoginPage(): JSX.Element {
 						</Form.Item>
 
 						<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-							<Button type="primary" htmlType="submit">
-                            Submit
+							<Button loading={loading} type="primary" htmlType="submit">
+                                Submit
 							</Button>
 						</Form.Item>
 					</Form>

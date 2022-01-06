@@ -14,4 +14,5 @@ export const ADMIN_ROUTE = {
 	CAST:"/cast",
 	CAST_CREATE:"/cast/create",
 	PLAN:"/plan",
+	PLAN_CREATE:"/plan/create",
 };

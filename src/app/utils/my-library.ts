@@ -122,3 +122,11 @@ export function convertDateTimeForPostData(date:any):string {
 
 
 }
+
+export function formatCurrency(v:string|number):string {
+	let value = v.toString();
+	value = parseInt(value.replace(/,/g, ""))
+		.toString()
+		.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
+	return value;
+}

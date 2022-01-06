@@ -11,10 +11,12 @@ import { ISignInPayload, ISignInResponsePayload } from "./types";
 
 interface IAdminAuth {
     isLoggedIn: boolean;
+	loading:boolean
 }
 
 const initialState: IAdminAuth = {
-	isLoggedIn:undefined
+	isLoggedIn:undefined,
+	loading:false
 };
 
 const adminAuthThunkSlice = createSlice({
@@ -26,6 +28,9 @@ const adminAuthThunkSlice = createSlice({
 			user.token = action.payload.accessToken;
 			setCookie(COOKIE_USER,JSON.stringify(user));
 			state.isLoggedIn = true;
+		},
+		setLoading:(state:IAdminAuth, action:PayloadAction<boolean>)=> {
+			state.loading = action.payload;
 		},
 		reLogin:(state:IAdminAuth) =>{
 			try {
@@ -44,10 +49,10 @@ const adminAuthThunkSlice = createSlice({
 	},
 });
 
-export const { signInSuccess,signOut,reLogin } = adminAuthThunkSlice.actions;
+export const { signInSuccess,signOut,reLogin,setLoading } = adminAuthThunkSlice.actions;
 
-export const signIn = (signInPayload : AuthRequestPayload,callback:VoidFunction): AppThunk =>async (dispatch,ThunkApi)=> {
-	console.log(ThunkApi);
+export const signIn = (signInPayload : AuthRequestPayload,callback:VoidFunction): AppThunk =>async (dispatch)=> {
+	dispatch(setLoading(true));
 	try {
 		const response: DataResponse<AuthResponsePayload> = await authApi.login(signInPayload) ;
 		
@@ -58,12 +63,16 @@ export const signIn = (signInPayload : AuthRequestPayload,callback:VoidFunction)
 	} catch (e) {
 		message.error("Can not sign in!");
 	} finally {
+		dispatch(setLoading(false));
 		console.log();
 	}
 };
 
 export const selectIsLoggedIn = (state: AppRootState) =>
 	state.rootReducer.adminAuthThunk.isLoggedIn;
+
+export const selectIsSigning = (state: AppRootState) =>
+	state.rootReducer.adminAuthThunk.loading;
 
 
 
