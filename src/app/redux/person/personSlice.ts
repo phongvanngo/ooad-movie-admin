@@ -59,13 +59,13 @@ const personSlice = createSlice({
 			state.loading = false;
 		},
 
-		fetchPersonListFromThePersonDB(
+		fetchPersonListFromTheMovieDB(
 			state,
-			action: PayloadAction<PersonSearchParams>,
+			action:PayloadAction<number>
 		) {
 			state.loading = true;
 		},
-		fetchPersonListFromThePersonDBSuccess(
+		fetchPersonListFromTheMovieDBSuccess(
 			state,
 			action: PayloadAction<DataResponse<Person[]>>,
 		) {
@@ -73,15 +73,15 @@ const personSlice = createSlice({
 			state.list = results;
 			state.pagination = {
 				current: page,
-				pageSize: 20,
+				pageSize: total_results,
 				total: total_results,
 			};
 			state.loading = false;
 		},
-		fetchPersonListFromThePersonDBFailed(state) {
+		fetchPersonListFromTheMovieDBFailed(state) {
 			state.loading = true;
 		},
-		searchPersonFromThePersonDBByName(state, action: PayloadAction<string>) {
+		searchPersonFromTheMovieDBByName(state, action: PayloadAction<string>) {
 			state.loading = false;
 		},
 	},

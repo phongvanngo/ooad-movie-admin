@@ -10,20 +10,21 @@ import { message } from "antd";
 
 
 
-function* fetchPersonListFromThePersonDB(
-	action: PayloadAction<PersonSearchParams>,
+function* fetchPersonListFromTheMovieDB(action:PayloadAction<number>
 ) {
 	let response: DataResponse<Person[]>;
 	try {
-		response = yield call(theMovieDBApi.person.getPersonPopular);
+		response = yield call(theMovieDBApi.person.getPersonPopular
+			,	action.payload
+		);
 
-		yield put(personActions.fetchPersonListFromThePersonDBSuccess(response));
+		yield put(personActions.fetchPersonListFromTheMovieDBSuccess(response));
 	} catch (error) {
 
-		yield put(personActions.fetchPersonListFromThePersonDBFailed());
+		yield put(personActions.fetchPersonListFromTheMovieDBFailed());
 	}
 }
-function* searchPersonFromThePersonDB(action: PayloadAction<string>) {
+function* searchPersonFromTheMovieDB(action: PayloadAction<string>) {
 	yield put(
 		push(`${APP_ROUTE.ADMIN}`),
 	);
@@ -32,12 +33,12 @@ function* searchPersonFromThePersonDB(action: PayloadAction<string>) {
 export default function* personSaga() {
 	// yield takeLatest(personActions.fetchPersonList, fetchPersonList);
 	yield takeLatest(
-		personActions.fetchPersonListFromThePersonDB,
-		fetchPersonListFromThePersonDB,
+		personActions.fetchPersonListFromTheMovieDB,
+		fetchPersonListFromTheMovieDB,
 	);
 	yield debounce(
 		500,
-		personActions.searchPersonFromThePersonDBByName,
-		searchPersonFromThePersonDB,
+		personActions.searchPersonFromTheMovieDBByName,
+		searchPersonFromTheMovieDB,
 	);
 }

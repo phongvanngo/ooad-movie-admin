@@ -15,8 +15,8 @@ const PlanManagementPage = React.lazy(() => import("./plan"));
 const AddEditPlanPage = React.lazy(() => import("./plan/AddEditPage"));
 const CompanyManagementPage = React.lazy(() => import("./company"));
 const AddEditCompanyPage = React.lazy(() => import("./company/AddEditPage"));
-const CastManagementPage = React.lazy(() => import("./company"));
-const AddEditCastPage = React.lazy(() => import("./company/AddEditPage"));
+const CastManagementPage = React.lazy(() => import("./person"));
+const AddEditCastPage = React.lazy(() => import("./person/AddEditPage"));
 const CommentManagementPage = React.lazy(() => import("./comment"));
 const UserManagementPage = React.lazy(() => import("./user"));
 

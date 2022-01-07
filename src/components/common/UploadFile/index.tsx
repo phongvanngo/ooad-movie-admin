@@ -1,19 +1,32 @@
 import React, { ReactElement } from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import { message } from "antd";
-import { BASE_URL_API } from "app/constants";
+import { BASE_URL_API, COOKIE_USER } from "app/constants";
 import Dragger from "antd/lib/upload/Dragger";
 import { DataResponse } from "app/model/PayloadResponse";
+import { AdminModel } from "app/model/User";
+import { getCookie } from "app/utils/cookie";
 
 interface Props {
     onComplete: (data: string) => void;
 }
 
 export default function UploadFile({ onComplete }: Props): ReactElement {
+	let token;
+	const adminUser = getCookie(COOKIE_USER);
+	if(adminUser) {
+		const user: AdminModel = JSON.parse(adminUser);
+		token = user.token;
+	};
+
+
 	const props = {
 		name: "file",
 		multiple: true,
 		maxCount:1,
+		headers: {
+			Authorization : `Bearer ${token}`
+		},
 		onPreview: (data) => {console.log(data);},
 		action: `${BASE_URL_API}/upload`,
 		onChange(info) {
