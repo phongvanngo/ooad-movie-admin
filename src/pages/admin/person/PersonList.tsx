@@ -81,6 +81,7 @@ export default function PersonList({ searchTerm }: Props): ReactElement {
 								<EditOutlined
 									key="edit"
 									onClick={() => {
+										dispatch(personActions.setEditingPerson(person));
 										navigate(
 											`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.CAST}/${person.id}`,
 										);

@@ -41,7 +41,7 @@ export default function PersonManagementPage(): ReactElement {
 						className="ml-2"
 						onClick={() => {
 							navigate(
-								`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.DISCOUNT_CREATE}`, 
+								`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.CAST_CREATE}`, 
 							);
 						}}
 						icon={<PlusCircleOutlined />}

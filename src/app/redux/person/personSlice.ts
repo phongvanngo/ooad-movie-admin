@@ -20,11 +20,13 @@ export interface PersonState {
     list: Person[];
     loading: boolean;
     editingPerson: Person;
+	newPersons:Person[];
     pagination: TablePagination;
 }
 
 const initialState: PersonState = {
 	list: [],
+	newPersons:[],
 	pagination: undefined,
 	loading: false,
 	editingPerson: undefined,
@@ -40,6 +42,9 @@ const personSlice = createSlice({
 	name: "personList",
 	initialState,
 	reducers: {
+		addNewPerson:(state,action:PayloadAction<Partial<Person>>) =>{
+			state.newPersons.push(action.payload as Person);
+		},
 		setEditingPerson(state, action: PayloadAction<Person>) {
 			state.editingPerson = action.payload;
 		},
@@ -70,7 +75,7 @@ const personSlice = createSlice({
 			action: PayloadAction<DataResponse<Person[]>>,
 		) {
 			const { page, total_results, results } = action.payload;
-			state.list = results;
+			state.list = [...state.newPersons,...results];
 			state.pagination = {
 				current: page,
 				pageSize: total_results,
