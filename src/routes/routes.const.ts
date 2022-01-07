@@ -13,6 +13,11 @@ export const ADMIN_ROUTE = {
 	DISCOUNT:"/discount",
 	CAST:"/cast",
 	CAST_CREATE:"/cast/create",
+	COMPANY_CREATE:"/company/create",
+	COMPANY:"/company",
+	ORDERS:"/order",
+	COMMENTS:"/comment",
 	PLAN:"/plan",
+	USER:"/user",
 	PLAN_CREATE:"/plan/create",
 };

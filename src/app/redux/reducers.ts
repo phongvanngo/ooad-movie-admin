@@ -8,6 +8,8 @@ import genre from "./genre/genreSlice";
 import person from "./person/personSlice";
 import discount from "./discount/discountSlice";
 import plan from "./plan/planSlice";
+import user from "./user/userSlice";
+import comment from "./comment/commentSlice";
 const rootReducer = combineReducers({
 	counter,
 	adminAuthThunk,
@@ -16,7 +18,9 @@ const rootReducer = combineReducers({
 	genre,
 	person,
 	discount,
-	plan
+	plan,
+	user,
+	comment
 
 });
 

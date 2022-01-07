@@ -25,9 +25,9 @@ export function converDate(str: string) {
 		const dates = str.split("-");
 		return `${dates[2]}/${dates[1]}/${dates[0]}`;
 	} catch (error) {
-		const date = new Date( parseInt(str)* 1000);
+		const date = new Date(parseInt(str) * 1000);
 		const day = "0" + date.getDate();
-		const month = "0" + date.getMonth()+1;
+		const month = "0" + date.getMonth() + 1;
 		const year = date.getUTCFullYear();
 
 		const formattedTime = day.substr(-2) + "-" + month.substr(-2) + "-" + year;
@@ -41,7 +41,7 @@ export function formatDateTime(timestamp: number) {
 		const day = "0" + date.getDate();
 		const month = "0" + date.getMonth();
 		const year = date.getFullYear();
-	
+
 		const formattedTime = day.substr(-2) + "-" + month.substr(-2) + ":" + year;
 		return formattedTime;
 	} catch (error) {
@@ -49,7 +49,7 @@ export function formatDateTime(timestamp: number) {
 	}
 }
 
-export function removeAccents(str:string) {
+export function removeAccents(str: string) {
 	try {
 		const AccentsMap = [
 			"aàảãáạăằẳẵắặâầẩẫấậ",
@@ -76,14 +76,14 @@ export function removeAccents(str:string) {
 	} catch (error) {
 		return str;
 	}
-	
+
 }
 
-export function filterArrayBySearchTerm(myArray:any, searchTerm:string):any {
+export function filterArrayBySearchTerm(myArray: any, searchTerm: string): any {
 	if (!searchTerm?.length) return myArray;
 	searchTerm = removeAccents(searchTerm).toUpperCase().trim();
 	const res = [];
-	
+
 	for (let index = 0; index < myArray.length; index++) {
 		const element = myArray[index];
 		try {
@@ -102,7 +102,7 @@ export function filterArrayBySearchTerm(myArray:any, searchTerm:string):any {
 	return res;
 }
 
-export function convertDateTime(myDate:number):string {
+export function convertDateTime(myDate: number): string {
 	// date to dd/mm/yyyy
 	const date = new Date(myDate);
 	console.log(date);
@@ -112,18 +112,30 @@ export function convertDateTime(myDate:number):string {
 	const output = day + "/" + month + "/" + year;
 	return output;
 }
+export function convertTimestampToFullDateTime(myDate: number): string {
+	// date to dd/mm/yyyy
+	const date = new Date(myDate);
+	console.log(date);
+	const month = date.getMonth() + 1;
+	const day = date.getDate();
+	const year = date.getFullYear();
+	const hh = date.getHours();
+	const mm = date.getMinutes();
+	const output = day + "/" + month + "/" + year + " " + hh + ":" + mm;
+	return output;
+}
 
-export function convertDateTimeForPostData(date:any):string {
+export function convertDateTimeForPostData(date: any): string {
 	const time = new Date(date);
 	const yy = time.getFullYear();
 	const mm = time.getMonth();
-	const dd =  time.getDate();
+	const dd = time.getDate();
 	return `${dd}/${mm}/${yy}`;
 
 
 }
 
-export function formatCurrency(v:string|number):string {
+export function formatCurrency(v: string | number): string {
 	let value = v.toString();
 	value = parseInt(value.replace(/,/g, ""))
 		.toString()

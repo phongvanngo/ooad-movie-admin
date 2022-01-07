@@ -4,3 +4,9 @@ export interface AdminModel {
     role:AdminRole;
     token:string;
 }
+
+export interface User {
+    id:string;
+    username:string;
+    role:string;
+}

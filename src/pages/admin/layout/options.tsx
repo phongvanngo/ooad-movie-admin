@@ -1,4 +1,15 @@
-import { PlaySquareOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+	PlaySquareOutlined,
+	HomeOutlined,
+	CreditCardOutlined,
+	CommentOutlined,
+	BulbOutlined,
+	ShareAltOutlined,
+	GiftOutlined,
+	UserOutlined,
+	TeamOutlined,
+	BarsOutlined,
+} from "@ant-design/icons";
 import React, { ReactElement } from "react";
 import { ADMIN_ROUTE, APP_ROUTE } from "routes/routes.const";
 
@@ -38,7 +49,7 @@ export const menus: Array<IMenuItem> = [
 	},
 	{
 		key: "genre",
-		icon: () => <PlaySquareOutlined />,
+		icon: () => <ShareAltOutlined />,
 		title: "Genre",
 		subMenuKey: "genre_management",
 		subMenu: [
@@ -55,8 +66,26 @@ export const menus: Array<IMenuItem> = [
 		],
 	},
 	{
+		key: "company",
+		icon: () => <BulbOutlined />,
+		title: "Film Studio",
+		subMenuKey: "company management",
+		subMenu: [
+			{
+				key: "danhsachcompany",
+				title: "All Film Studios",
+				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMPANY_CREATE}`,
+			},
+			{
+				key: "taotheloaimoi",
+				title: "Create Film Studio",
+				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMPANY}`,
+			},
+		],
+	},
+	{
 		key: "person",
-		icon: () => <PlaySquareOutlined />,
+		icon: () => <TeamOutlined />,
 		title: "Cast",
 		subMenuKey: "person_management",
 		subMenu: [
@@ -74,7 +103,7 @@ export const menus: Array<IMenuItem> = [
 	},
 	{
 		key: "Discount",
-		icon: () => <PlaySquareOutlined />,
+		icon: () => <GiftOutlined />,
 		title: "Discount",
 		subMenuKey: "discount_management",
 		subMenu: [
@@ -92,8 +121,26 @@ export const menus: Array<IMenuItem> = [
 	},
 	{
 		key: "planmanagement",
-		icon: () => <HomeOutlined />,
+		icon: () => <CreditCardOutlined />,
 		title: "Plan",
 		path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.PLAN}`,
+	},
+	{
+		key: "usermanagement",
+		icon: () => <UserOutlined />,
+		title: "Users",
+		path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.USER}`,
+	},
+	{
+		key: "commentmanagement",
+		icon: () => <CommentOutlined />,
+		title: "Comment",
+		path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMMENTS}`,
+	},
+	{
+		key: "orders",
+		icon: () => <BarsOutlined />,
+		title: "Orders",
+		path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.ORDERS}`,
 	},
 ];
