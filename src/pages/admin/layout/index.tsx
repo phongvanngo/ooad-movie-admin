@@ -23,14 +23,24 @@ function MainLayout():ReactElement {
 					style={{ height: "45px", padding: 0 }}
 				>
 					<div className="h-full w-full flex items-center justify-end">
-						<Button onClick={()=>{
-							dispatch(signOut());
-						}} className="mr-2" icon={<LogoutOutlined />}>
+						<Button
+							onClick={() => {
+								dispatch(signOut());
+							}}
+							className="mr-2"
+							icon={<LogoutOutlined />}
+						>
                             Logout
 						</Button>
 					</div>
 				</Header>
-				<Content style={{ margin: "0 16px" }}>
+				<Content
+					style={{
+						margin: "0 0px",
+						padding: "0 16px",
+						// backgroundImage: "url(images/mainbg.jpg)",
+					}}
+				>
 					<AppBreadcrumb />
 					<div
 						className="site-layout-background"
@@ -39,7 +49,12 @@ function MainLayout():ReactElement {
 						<Outlet />
 					</div>
 				</Content>
-				<Footer style={{ textAlign: "center" }}>
+				<Footer
+					style={{
+						textAlign: "center",
+						backgroundColor: "rgba(76, 175, 80, 0.0)",
+					}}
+				>
                     Ant Design ©2018 Created by Ant UED
 				</Footer>
 			</Layout>

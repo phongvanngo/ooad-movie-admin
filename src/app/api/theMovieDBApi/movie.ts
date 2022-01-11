@@ -4,6 +4,7 @@ import { DataResponse, PaginationParams } from "app/model/PayloadResponse";
 import { MovieSearchParams } from "app/redux/movie/movieSlice";
 import axiosClient from "../axiosClient";
 import queryString from "query-string";
+import { VidoesOfMovie } from "app/model/video";
 
 export const movie = {
 	get: (params: MovieSearchParams): Promise<DataResponse<MovieModel[]>> => {
@@ -28,5 +29,9 @@ export const movie = {
 		
 		return axiosClient.get(url, { baseURL: THEMOVIEDB_BASEURL });
 	},
+	getVideosOfMovie:(id:string): Promise<VidoesOfMovie> => {
+		const url = `/movie/${id}/videos?api_key=${THEMOVIEDB_API_KEY}`;
+		return axiosClient.get(url, { baseURL: THEMOVIEDB_BASEURL });
+	}
 };
 

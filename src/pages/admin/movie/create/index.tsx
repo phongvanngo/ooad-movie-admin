@@ -11,6 +11,7 @@ import MovieForm from "./MovieForm/MovieForm";
 
 export default function CreateMovie(): ReactElement {
 	const navigate = useNavigate();
+	const {movieId} = useParams();
 	const initialValue = useAppSelector(selectEditingMovie);
 	function handleSubmit(movie: Partial<MovieModel>): void {
 		(async () => {
@@ -29,6 +30,9 @@ export default function CreateMovie(): ReactElement {
 	const dispacth = useAppDispatch();
 	useEffect(() => {
 		dispacth(genreActions.fetchAllGenreList());
+		// if (movieId) {
+			
+		// }
 	}, []);
 	return (
 		<div>

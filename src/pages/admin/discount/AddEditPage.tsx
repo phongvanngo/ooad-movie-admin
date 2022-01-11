@@ -15,7 +15,7 @@ export default function AddEditPage(): ReactElement {
 		(async () => {
 			try {
 				if (initialValue) {
-					const response = await discountApi.update(discount);
+					const response = await discountApi.update({...discount,id:initialValue.id});
 				} else {
 					const response = await discountApi.add(discount);
 				}

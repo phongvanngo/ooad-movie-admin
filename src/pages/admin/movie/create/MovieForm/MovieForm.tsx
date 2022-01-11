@@ -1,10 +1,13 @@
-import { Form, Input, Button, Select, Checkbox, Image } from "antd";
+import { Button, Checkbox, Form, Image, Input, Select } from "antd";
 import { theMovieDBApi } from "app/api/theMovieDBApi";
 import movieDbApiConfig from "app/api/theMovieDBApi/config";
-import { movie } from "app/api/theMovieDBApi/movie";
-import { MovieModel, MovieModelCamelCase } from "app/model/movie";
+import { Genre } from "app/model/genre";
+import { MovieModel } from "app/model/movie";
+import { selectGenreList } from "app/redux/genre/genreSlice";
+import { useAppSelector } from "app/redux/store";
 import { converDate, getRandomInt } from "app/utils/my-library";
 import { ReactElement, useEffect, useState } from "react";
+import SelectGenreForm from "./SelectGenreForm";
 
 const { Option } = Select;
 
@@ -32,18 +35,20 @@ export default function MovieForm({
 
 	const onFinish = (values: Partial<MovieModel>) => {
 		const movie = {
-			// id:movieId+"",
-			
+			genresIds: movieGenres,
+			// genres: movieGenres,
 			...values,
-		
 		};
-		
+		console.log(movie);
 		onSubmit(movie);
 	};
-
+	const [loading, setLoading] = useState<boolean>(false);
 	const [backdrop, setBackdrop] = useState<string>("error");
 	const [poster, setPoster] = useState<string>("error");
+	const [videosOfMovie, setVideosOfMovie] = useState<string[]>([]);
+	const [movieGenres, setMovieGenres] = useState<string[]>([]);
 	const [movieId, setMovieId] = useState<string>();
+	const genres = useAppSelector(selectGenreList);
 
 	useEffect(() => {
 		if (initialValue) {
@@ -52,7 +57,7 @@ export default function MovieForm({
 				backdrop_path: initialValue.backdrop_path,
 				title: initialValue.title,
 				original_title: initialValue.original_title,
-				overview: initialValue.overview.slice(0,1000),
+				overview: initialValue.overview.slice(0, 1000),
 				poster_path: initialValue.poster_path,
 				release_date: converDate(initialValue.release_date),
 				budget: initialValue.budget,
@@ -61,7 +66,9 @@ export default function MovieForm({
 				adult: initialValue.adult,
 			});
 			setMovieId(initialValue.id);
+			setMovieGenres(initialValue.genre_ids);
 			setPoster(movieDbApiConfig.originalImage(initialValue.poster_path));
+			// setMovieGenres(initialValue.genre_ids);
 			setBackdrop(
 				movieDbApiConfig.originalImage(initialValue.backdrop_path),
 			);
@@ -69,34 +76,54 @@ export default function MovieForm({
 	}, []);
 
 	async function handleRandomValue() {
-		const id: any = getRandomInt(50000);
-		try {
-			const res = await theMovieDBApi.movie.getById(id);
-			const movie_detail: MovieModel = res as MovieModel;
-			
-			form.setFieldsValue({
-				// id: movie_detail.id,
-				backdrop_path: movie_detail.backdrop_path,
-				title: movie_detail.title,
-				original_title: movie_detail.original_title,
-				overview: movie_detail.overview.slice(0, 1000),
-				poster_path: movie_detail.poster_path,
-				release_date: converDate(movie_detail.release_date),
-				budget: movie_detail.budget,
-				homepage: movie_detail.homepage,
-				isTVSeries: false,
-				adult: movie_detail.adult,
-			});
-			setMovieId(movie_detail.id);
-			setPoster(movieDbApiConfig.originalImage(movie_detail.poster_path));
-			setBackdrop(
-				movieDbApiConfig.originalImage(movie_detail.backdrop_path),
-			);
-		} catch (error) {
-			console.log(error);
+		let found = false;
+		while (!found) {
+			const id: any = getRandomInt(50000);
+			try {
+				const res = await theMovieDBApi.movie.getById(id);
+				const videos = { results: [], id: "" };
+				// const videos = await theMovieDBApi.movie.getVideosOfMovie(id);
+				const newVideos = videos.results.map(
+					(e) => "https://www.youtube.com/embed/" + e.key,
+				);
+				const movie_detail: MovieModel = res as MovieModel;
+				// if (!movie_detail.backdrop_path || !newVideos[0]) throw Error();
+				form.setFieldsValue({
+					// id: movie_detail.id,
+					backdrop_path: movie_detail.backdrop_path,
+					title: movie_detail.title,
+					original_title: movie_detail.original_title,
+					overview: movie_detail.overview.slice(0, 1000),
+					poster_path: movie_detail.poster_path,
+					release_date: converDate(movie_detail.release_date),
+					budget: movie_detail.budget,
+					homepage: movie_detail.homepage,
+					isTVSeries: false,
+					adult: movie_detail.adult,
+					trailer_1: newVideos[0],
+					trailer_2: newVideos[1],
+				});
+				setVideosOfMovie(newVideos);
+				setMovieId(movie_detail.id);
+				setPoster(
+					movieDbApiConfig.originalImage(movie_detail.poster_path),
+				);
+				setBackdrop(
+					movieDbApiConfig.originalImage(movie_detail.backdrop_path),
+				);
+				setLoading(false);
+				const newListGenreIds = movie_detail.genres.map(
+					(genre) => genre.id,
+				);
+				setMovieGenres(newListGenreIds);
+				found = true;
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	}
 
+	console.log("gemres", movieGenres);
 	return (
 		<Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
 			<Form.Item
@@ -123,6 +150,15 @@ export default function MovieForm({
 				rules={[{ required: true }]}
 			>
 				<Input />
+			</Form.Item>
+			<Form.Item {...tailLayout} label="Genres">
+				<SelectGenreForm
+					genres={genres}
+					onChange={(values) => {
+						setMovieGenres(values);
+					}}
+					initialValues={movieGenres}
+				/>
 			</Form.Item>
 			<Form.Item
 				name="overview"
@@ -154,6 +190,44 @@ export default function MovieForm({
 				<Input />
 			</Form.Item>
 			<Form.Item
+				name="trailer_1"
+				label="Trailer 1"
+				rules={[{ required: false }]}
+			>
+				<Input />
+			</Form.Item>
+			<Form.Item {...tailLayout}>
+				{videosOfMovie[0] ? (
+					<iframe
+						height={300}
+						src={videosOfMovie[0]}
+						title="description"
+						width={500}
+					/>
+				) : (
+					""
+				)}
+			</Form.Item>
+			<Form.Item
+				name="trailer_2"
+				label="Trailer 2"
+				rules={[{ required: false }]}
+			>
+				<Input />
+			</Form.Item>
+			<Form.Item {...tailLayout}>
+				{videosOfMovie[1] ? (
+					<iframe
+						height={300}
+						src={videosOfMovie[1]}
+						title="description"
+						width={500}
+					/>
+				) : (
+					""
+				)}
+			</Form.Item>
+			<Form.Item
 				name="homepage"
 				label="Homepage"
 				rules={[{ required: false }]}
@@ -177,7 +251,9 @@ export default function MovieForm({
 				</Button>
 			</Form.Item>
 			<Button
+				loading={loading}
 				onClick={() => {
+					setLoading(true);
 					handleRandomValue();
 				}}
 			>

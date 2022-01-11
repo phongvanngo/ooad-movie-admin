@@ -1,4 +1,5 @@
 import { Episode } from "./episode";
+import { Genre } from "./genre";
 
 export interface MovieModel {
     id: string;
@@ -14,10 +15,15 @@ export interface MovieModel {
     isTVSeries: boolean;
     original_language: boolean;
     genre_ids: Array<string>;
+    genres:Array<Genre>;
+    genreIds
     overview:string;
     original_title:string;
     video: boolean;
     episodes: Array<Episode>
+    enabled:boolean;
+    trailer1:string;
+    trailer2:string;
 }
 
 export interface MovieModelCamelCase {
@@ -52,7 +58,8 @@ export const MovieModelMapPattern= {
 	// original_title:"originalTitle",
 	// originalTitle:"original_title",
 	is_tv_series:"isTVSeries",
-	back_drop_path:"backdrop_path"
+	back_drop_path:"backdrop_path",
+	genres:"genre_ids",
 };
 
 

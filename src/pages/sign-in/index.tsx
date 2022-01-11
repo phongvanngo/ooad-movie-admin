@@ -2,13 +2,17 @@ import { AppRootState, useAppSelector } from "app/redux/store";
 import { selectIsSigning, signIn } from "app/redux/slices/adminAuthThunk";
 import { ISignInPayload } from "app/redux/slices/adminAuthThunk/types";
 import { useAppDispatch } from "app/redux/store";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, Spin } from "antd";
 import { AuthRequestPayload } from "app/model/PayloadResponse";
 import PageLoader from "components/common/PageLoader";
-
+import { MailFilled, LockFilled } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
+const antIcon = (
+	<LoadingOutlined style={{ fontSize: 24, color: "white" }} spin />
+);
 const layout = {
 	labelCol: { span: 4 },
 	wrapperCol: { span: 20 },
@@ -52,6 +56,21 @@ function LoginPage(): JSX.Element {
 	// 	));
 	// }
 
+	function handleSubmit(e) {
+		e.preventDefault();
+		const username = usernameRef.current.value;
+		const password = passwordRef.current.value;
+		const values = { username, password };
+		dispatch(
+			signIn(values, () => {
+				navigate(from, { replace: true });
+			}),
+		);
+	}
+
+	const usernameRef = useRef(null);
+	const passwordRef = useRef(null);
+
 	useEffect(() => {
 		if (isLoggedIn) {
 			navigate(from, { replace: true });
@@ -59,62 +78,108 @@ function LoginPage(): JSX.Element {
 	}, []);
 
 	return (
-		<div>
-			
-			<div className="max-w-md p-5 mx-auto">
-				<div className="shadow-sm p-5 bg-gray-200">
-					<h1 className="font-bold text-center text-xl">
-                        OOMOVIE ADMINPAGE
-					</h1>
-					<Form
-						name="basic"
-						labelCol={{ span: 8 }}
-						wrapperCol={{ span: 16 }}
-						initialValues={{ remember: true }}
-						onFinish={onFinish}
-						// onFinishFailed={onFinishFailed}
-						autoComplete="off"
+		<div
+			style={{
+				minWidth: "100vw",
+				minHeight: "100vh",
+				backgroundAttachment: "fixed",
+				backgroundSize: "cover",
+				backgroundImage: "url(/images/spiderman.jpg)",
+			}}
+		>
+			<div
+				style={{
+					minWidth: "100vw",
+					minHeight: "100vh",
+					background:
+                        "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7007003484987745) 82%, rgba(255,255,255,0.13487401796656162) 100%)",
+				}}
+				className="flex items-center"
+			>
+				<div className="max-w-md p-5 mx-auto ">
+					<div className="w-full flex justify-center items-center mb-10">
+						<img
+							className="mr-2"
+							width={30}
+							src="/images/tmovie.png"
+						/>
+						<span className="font-extrabold text-lg text-white">
+                            NightMovie
+						</span>
+					</div>
+					<div
+						style={{
+							backgroundColor: "#0c0b10",
+						}}
+						className="shadow-sm p-5  text-white"
 					>
-						<Form.Item
-							label="Username"
-							name="username"
-							rules={[
-								{
-									required: true,
-									message: "Please input your username!",
-								},
-							]}
+						<div className="mb-14">
+							<h1 className="font-bold text-left text-3xl text-white">
+                                Login
+								{/* <span className="ml-2 text-gray-700">
+									For Admin
+								</span> */}
+							</h1>
+							<span className="text-gray-700 font-bold text-md ">
+                                Get login to access your account
+							</span>
+						</div>
+						<form
+							onSubmit={handleSubmit}
+							className="text-black font-extrabold"
+							style={{ color: "#6a6a6c" }}
 						>
-							<Input />
-						</Form.Item>
-
-						<Form.Item
-							label="Password"
-							name="password"
-							rules={[
-								{
-									required: true,
-									message: "Please input your password!",
-								},
-							]}
-						>
-							<Input.Password />
-						</Form.Item>
-
-						<Form.Item
-							// name="remember"
-							valuePropName="checked"
-							wrapperCol={{ offset: 8, span: 16 }}
-						>
-							<Checkbox>Remember me</Checkbox>
-						</Form.Item>
-
-						<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-							<Button loading={loading} type="primary" htmlType="submit">
-                                Submit
-							</Button>
-						</Form.Item>
-					</Form>
+							<div
+								className=" bg-opacity-80 p-5 flex items-center justify-start mb-10 font-extrabold"
+								style={{
+									backgroundColor: "#18181c",
+								}}
+							>
+								<input
+									autoComplete="false"
+									required
+									ref={usernameRef}
+									style={{
+										backgroundColor: "#18181c",
+									}}
+									className="appearance-none border-none font-extrabold"
+									placeholder="Username"
+								/>
+								<MailFilled />
+							</div>
+							<div
+								style={{ backgroundColor: "#18181c" }}
+								className="  p-5 flex items-center justify-start mb-10"
+							>
+								<input
+									autoComplete="false"
+									ref={passwordRef}
+									style={{ backgroundColor: "#18181c" }}
+									className="  appearance-none border-none font-extrabold "
+									placeholder="Password"
+									type="password"
+									required
+								/>
+								<LockFilled className="" />
+							</div>
+							<div className="w-full flex items-center ">
+								<button
+									type="submit"
+									className="appearance-none border-none rounded-full w-52 h-14 font-blod text-white font-bold uppercase mx-auto bg-red-500 hover:bg-red-900 transition-all duration-200"
+								>
+									{" "}
+									{loading ? (
+										<Spin
+											size="small"
+											indicator={antIcon}
+										/>
+									) : (
+										"LOGIN"
+									)}
+								</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

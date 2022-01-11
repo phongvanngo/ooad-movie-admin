@@ -70,7 +70,7 @@ const movieSlice = createSlice({
 		) {
 			state.loading = false;
 			state.list = [
-				...action.payload.data.map(e=>MapVariable<MovieModel>(e,MovieModelMapPattern)).reverse()
+				...action.payload.data.map(e=>MapVariable<MovieModel>(e,MovieModelMapPattern)).reverse().filter(e=>e.enabled)
 			];
 		},
 		fetchMovieListFromTheMovieDB(
