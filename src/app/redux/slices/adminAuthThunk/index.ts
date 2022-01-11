@@ -61,7 +61,7 @@ export const signIn = (signInPayload : AuthRequestPayload,callback:VoidFunction)
 			callback();
 		}
 	} catch (e) {
-		message.error("Can not sign in!");
+		message.error("Username or password is incorrect !");
 	} finally {
 		dispatch(setLoading(false));
 		console.log();

@@ -94,7 +94,7 @@ export default function MovieForm({
 					(e) => "https://www.youtube.com/embed/" + e.key,
 				);
 				const movie_detail: MovieModel = res as MovieModel;
-				console.log(movie_detail.backdrop_path,newVideos);
+				console.log(movie_detail.backdrop_path, newVideos);
 				if (!movie_detail.backdrop_path || !newVideos[0]) throw Error();
 				form.setFieldsValue({
 					// id: movie_detail.id,
@@ -123,6 +123,7 @@ export default function MovieForm({
 				setLoading(false);
 				setMovieGenres(movie_detail.genres);
 				found = true;
+				window.scrollTo(0, 0);
 			} catch (error) {
 				console.log(error);
 			}
@@ -258,6 +259,7 @@ export default function MovieForm({
 				</Button>
 			</Form.Item>
 			<Button
+				type="primary"
 				loading={loading}
 				onClick={() => {
 					setLoading(true);

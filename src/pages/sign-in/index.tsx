@@ -10,6 +10,7 @@ import { AuthRequestPayload } from "app/model/PayloadResponse";
 import PageLoader from "components/common/PageLoader";
 import { MailFilled, LockFilled } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
+import "./style.scss";
 const antIcon = (
 	<LoadingOutlined style={{ fontSize: 24, color: "white" }} spin />
 );
@@ -96,7 +97,7 @@ function LoginPage(): JSX.Element {
 				}}
 				className="flex items-center"
 			>
-				<div className="max-w-md p-5 mx-auto ">
+				<div className="max-w-md w-96 p-5 mx-auto ">
 					<div className="w-full flex justify-center items-center mb-10">
 						<img
 							className="mr-2"
@@ -165,7 +166,7 @@ function LoginPage(): JSX.Element {
 							<div className="w-full flex items-center ">
 								<button
 									type="submit"
-									className="appearance-none border-none rounded-full w-52 h-14 font-blod text-white font-bold uppercase mx-auto bg-red-500 hover:bg-red-900 transition-all duration-200"
+									className="appearance-none border-none text-lg rounded-full w-full h-14 font-blod text-white font-bold uppercase mx-auto bg-red-500 hover:bg-red-900 transition-all duration-200"
 								>
 									{" "}
 									{loading ? (
