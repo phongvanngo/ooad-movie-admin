@@ -4,8 +4,8 @@ import React, { ReactElement, useEffect, useState } from "react";
 
 interface Props {
     genres: Genre[];
-    initialValues: string[];
-    onChange: (value) => void;
+    initialValues: Genre[] | string[];
+    onChange: (value:string[]) => void;
 }
 const { Option } = Select;
 export default function SelectGenreForm({
@@ -16,18 +16,23 @@ export default function SelectGenreForm({
 	const handleChange = (value) => {
 		console.log(value);
 		setValues(value);
+		onChange(value);
 	};
 	const [values, setValues] = useState<string[]>([]);
 
-
 	useEffect(() => {
-		console.log("initial values",initialValues);
-		const GenreIDs = initialValues.map(genre=>{
-			const index = genres.findIndex(e => e.genre_id_fake === genre);
-			return genres[index]?.id || genre;
-
-		});
-		setValues(GenreIDs);
+		console.log("initial values", initialValues);
+		if (initialValues) {
+			const GenreIDs = initialValues.map((genre) => {
+				const index = genres.findIndex(
+					(e) => e.genre_id_fake == genre.id,
+				);
+				return genres[index]?.id || genre.id;
+			});
+			setValues(GenreIDs);
+			onChange(GenreIDs);
+			
+		}
 	}, [initialValues]);
 
 	return (

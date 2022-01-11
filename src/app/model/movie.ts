@@ -1,5 +1,6 @@
 import { Episode } from "./episode";
 import { Genre } from "./genre";
+import { Video } from "./video";
 
 export interface MovieModel {
     id: string;
@@ -14,9 +15,8 @@ export interface MovieModel {
     vote_average?: number;
     isTVSeries: boolean;
     original_language: boolean;
-    genre_ids: Array<string>;
+    genre_ids: Array<Genre> | Array<string>;
     genres:Array<Genre>;
-    genreIds
     overview:string;
     original_title:string;
     video: boolean;
@@ -24,6 +24,8 @@ export interface MovieModel {
     enabled:boolean;
     trailer1:string;
     trailer2:string;
+    movie_id_fake:string;
+    videos?:Video[]
 }
 
 export interface MovieModelCamelCase {

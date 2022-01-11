@@ -6,6 +6,7 @@ import { MovieModel } from "app/model/movie";
 import { selectGenreList } from "app/redux/genre/genreSlice";
 import { useAppSelector } from "app/redux/store";
 import { converDate, getRandomInt } from "app/utils/my-library";
+import moment from "moment";
 import { ReactElement, useEffect, useState } from "react";
 import SelectGenreForm from "./SelectGenreForm";
 
@@ -33,9 +34,10 @@ export default function MovieForm({
 }: Props): ReactElement {
 	const [form] = Form.useForm();
 
-	const onFinish = (values: Partial<MovieModel>) => {
+	const onFinish = (values: MovieModel) => {
 		const movie = {
-			genresIds: movieGenres,
+			genre_ids: selectedGenres,
+			movie_id_fake: movieIdFake,
 			// genres: movieGenres,
 			...values,
 		};
@@ -46,8 +48,10 @@ export default function MovieForm({
 	const [backdrop, setBackdrop] = useState<string>("error");
 	const [poster, setPoster] = useState<string>("error");
 	const [videosOfMovie, setVideosOfMovie] = useState<string[]>([]);
-	const [movieGenres, setMovieGenres] = useState<string[]>([]);
+	const [movieGenres, setMovieGenres] = useState<Genre[] | string[]>([]);
+	const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 	const [movieId, setMovieId] = useState<string>();
+	const [movieIdFake, setMovieIdFake] = useState<string>();
 	const genres = useAppSelector(selectGenreList);
 
 	useEffect(() => {
@@ -59,7 +63,9 @@ export default function MovieForm({
 				original_title: initialValue.original_title,
 				overview: initialValue.overview.slice(0, 1000),
 				poster_path: initialValue.poster_path,
-				release_date: converDate(initialValue.release_date),
+				release_date: moment(
+					new Date(initialValue.release_date),
+				).format("DD/MM/YYYY"),
 				budget: initialValue.budget,
 				homepage: initialValue.homepage,
 				isTVSeries: initialValue.isTVSeries,
@@ -80,14 +86,16 @@ export default function MovieForm({
 		while (!found) {
 			const id: any = getRandomInt(50000);
 			try {
-				const res = await theMovieDBApi.movie.getById(id);
-				const videos = { results: [], id: "" };
+				const res = await theMovieDBApi.movie.getMovieAndVideosById(id);
+				console.log(res);
+				const videos = res.videos;
 				// const videos = await theMovieDBApi.movie.getVideosOfMovie(id);
-				const newVideos = videos.results.map(
+				const newVideos = videos.map(
 					(e) => "https://www.youtube.com/embed/" + e.key,
 				);
 				const movie_detail: MovieModel = res as MovieModel;
-				// if (!movie_detail.backdrop_path || !newVideos[0]) throw Error();
+				console.log(movie_detail.backdrop_path,newVideos);
+				if (!movie_detail.backdrop_path || !newVideos[0]) throw Error();
 				form.setFieldsValue({
 					// id: movie_detail.id,
 					backdrop_path: movie_detail.backdrop_path,
@@ -100,9 +108,10 @@ export default function MovieForm({
 					homepage: movie_detail.homepage,
 					isTVSeries: false,
 					adult: movie_detail.adult,
-					trailer_1: newVideos[0],
-					trailer_2: newVideos[1],
+					trailer1: newVideos[0],
+					trailer2: newVideos[1],
 				});
+				setMovieIdFake(movie_detail.id);
 				setVideosOfMovie(newVideos);
 				setMovieId(movie_detail.id);
 				setPoster(
@@ -112,10 +121,7 @@ export default function MovieForm({
 					movieDbApiConfig.originalImage(movie_detail.backdrop_path),
 				);
 				setLoading(false);
-				const newListGenreIds = movie_detail.genres.map(
-					(genre) => genre.id,
-				);
-				setMovieGenres(newListGenreIds);
+				setMovieGenres(movie_detail.genres);
 				found = true;
 			} catch (error) {
 				console.log(error);
@@ -155,7 +161,8 @@ export default function MovieForm({
 				<SelectGenreForm
 					genres={genres}
 					onChange={(values) => {
-						setMovieGenres(values);
+						console.log(values);
+						setSelectedGenres(values);
 					}}
 					initialValues={movieGenres}
 				/>
@@ -190,7 +197,7 @@ export default function MovieForm({
 				<Input />
 			</Form.Item>
 			<Form.Item
-				name="trailer_1"
+				name="trailer1"
 				label="Trailer 1"
 				rules={[{ required: false }]}
 			>
@@ -209,7 +216,7 @@ export default function MovieForm({
 				)}
 			</Form.Item>
 			<Form.Item
-				name="trailer_2"
+				name="trailer2"
 				label="Trailer 2"
 				rules={[{ required: false }]}
 			>
