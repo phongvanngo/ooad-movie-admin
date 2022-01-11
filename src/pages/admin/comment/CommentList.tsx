@@ -16,6 +16,11 @@ interface Props {
     loading?: boolean;
 }
 
+type CommentModelAndModrate = {
+	comment:CommentModel;
+	moderate:CommentStatus;
+}
+
 export default function CommentList({
 	comments,
 	moderateMode,
@@ -24,25 +29,27 @@ export default function CommentList({
 	const dispatch = useAppDispatch();
 	const udpatingLoading = useAppSelector(selectUpdatingLoading);
 	const [updatingComment, setUpdatingComment] =
-        useState<Partial<CommentModel>>();
-	function handleAcceptComment(comment: CommentModel) {
-		setUpdatingComment(comment);
+        useState<CommentModelAndModrate>();
+	function handleAcceptComment(commentModeration: CommentModelAndModrate) {
+		setUpdatingComment(commentModeration);
 		dispatch(
 			commentActions.updateComment({
-				id: comment.id,
+				id: commentModeration.comment.id,
 				status: CommentStatus.accepted,
 			}),
 		);
 	}
-	function handleRejectComment(comment) {
-		setUpdatingComment(comment);
+	function handleRejectComment(commentModeration:CommentModelAndModrate) {
+		setUpdatingComment(commentModeration);
 		dispatch(
 			commentActions.updateComment({
-				id: comment.id,
+				id: commentModeration.comment.id,
 				status: CommentStatus.rejected,
 			}),
 		);
 	}
+
+
 	return (
 		<div>
 			<MySkeleton
@@ -52,14 +59,13 @@ export default function CommentList({
 				paragraph={{ rows: 2 }}
 			/>
 			{comments.map((comment) => {
+
 				return (
 					<Comment
 						key={comment.id}
-						actions={[
-							<span key="comment-nested-reply-to">Reply to</span>,
-						]}
+						actions={[<span key="comment-nested-reply-to"></span>]}
 						datetime={convertTimestampToFullDateTime(comment.time)}
-						author={<a>User</a>}
+						author={<a>{comment.user.fullname}</a>}
 						avatar={
 							<Avatar
 								src="https://joeschmoe.io/api/v1/random"
@@ -74,12 +80,16 @@ export default function CommentList({
 									<Button
 										loading={
 											udpatingLoading &&
-                                        updatingComment?.commentStatus ===
-                                            CommentStatus.rejected &&
-                                        updatingComment?.id === comment.id
+                                        updatingComment?.moderate ===
+                                            CommentStatus.accepted &&
+                                        updatingComment?.comment.id ===
+                                            comment.id
 										}
 										onClick={() => {
-											handleAcceptComment(comment);
+											handleAcceptComment({
+												comment,
+												moderate: CommentStatus.accepted,
+											});
 										}}
 										type="primary"
 										icon={<CheckOutlined />}
@@ -94,12 +104,16 @@ export default function CommentList({
 									<Button
 										loading={
 											udpatingLoading &&
-                                        updatingComment?.commentStatus ===
-                                            CommentStatus.accepted &&
-                                        updatingComment?.id === comment.id
+                                        updatingComment?.moderate ===
+                                            CommentStatus.rejected &&
+                                        updatingComment?.comment.id ===
+                                            comment.id
 										}
 										onClick={() => {
-											handleRejectComment(comment);
+											handleAcceptComment({
+												comment,
+												moderate: CommentStatus.rejected,
+											});
 										}}
 										danger
 										icon={<CloseOutlined />}
@@ -113,7 +127,7 @@ export default function CommentList({
 					</Comment>
 				);
 			})}
-			{comments.length === 0 ? 
+			{comments.length === 0 && !loading ? 
 				<div className="text-center">There{"'s"} nothing here</div>:""	
 			}
 		</div>

@@ -1,9 +1,10 @@
 export interface CommentModel {
-    id:string;
-    time:number;
-    commentStatus:CommentStatus;
+    id: string;
+    time: number;
+    status: CommentStatus;
     content: "123";
-    movie_id;
+    movie_id: string;
+    user: { fullname: string; id: string; username: string }
 }
 
 export enum CommentStatus {
@@ -13,6 +14,6 @@ export enum CommentStatus {
 }
 
 export type GetCommentParameters = {
-    status?:CommentStatus
-    movie_id?:string
+    status?: CommentStatus
+    movie_id?: string
 }

@@ -26,6 +26,7 @@ const commentSlice = createSlice({
 			state.editingComment = action.payload;
 		},
 		fetchCommentList(state,action:PayloadAction<GetCommentParameters>) {
+			state.list=[];
 			state.loading = true;
 		},
 		fetchCommentListSuccess(
