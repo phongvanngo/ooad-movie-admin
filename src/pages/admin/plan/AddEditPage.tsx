@@ -10,11 +10,13 @@ import { selectEditingPlan } from "app/redux/plan/planSlice";
 
 export default function AddEditPage(): ReactElement {
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
 	const initialValue = useAppSelector(selectEditingPlan);
 	function handleSubmit(plan: Partial<Plan>): void {
 		(async () => {
 			try {
 				if (initialValue) {
+					setLoading(true);
 					const response = await planApi.update({id:planId,...plan});
 				} else {
 					const response = await planApi.add(plan);
@@ -22,6 +24,9 @@ export default function AddEditPage(): ReactElement {
 				navigate(`${APP_ROUTE.ADMIN}${ADMIN_ROUTE.PLAN}`);
 			} catch (error) {
 				message.error("Không thể thực hiện");
+			}
+			finally {
+				setLoading(false);
 			}
 		})();
 	}
@@ -32,7 +37,8 @@ export default function AddEditPage(): ReactElement {
 	}, []);
 	return (
 		<div>
-			<PlanForm onSubmit={handleSubmit} initialValue={initialValue} />
+			<PlanForm loading=
+				{loading} onSubmit={handleSubmit} initialValue={initialValue} />
 		</div>
 	);
 }

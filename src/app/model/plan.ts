@@ -2,7 +2,8 @@ export interface Plan {
     id: string;
     title:string;
     price:number;
-    descriptions:Array<Descriptions> | string;
+    description:Array<Descriptions> | string;
+    duration:number;
 }
 
 export type Descriptions = {

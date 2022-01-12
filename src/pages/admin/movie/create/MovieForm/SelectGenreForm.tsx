@@ -36,11 +36,11 @@ export default function SelectGenreForm({
 	}, [initialValues]);
 
 	return (
-		<div>
+		<div className="w-full">
 			<Select
 				value={values}
 				mode="tags"
-				// style={{ width: "100%" }}
+				style={{ width: "100%" }}
 				placeholder="Tags Mode"
 				onChange={handleChange}
 			>

@@ -1,6 +1,6 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Select, Space } from "antd";
-import { Plan } from "app/model/plan";
+import { Descriptions, Plan } from "app/model/plan";
 import { ReactElement, useEffect } from "react";
 
 const { Option } = Select;
@@ -16,41 +16,45 @@ const tailLayout = {
 interface Props {
     initialValue?: Plan;
     onSubmit: (plan: Partial<Plan>) => void;
+	loading:boolean;
 }
 
 export default function PlanForm({
 	initialValue,
 	onSubmit,
+	loading
 }: Props): ReactElement {
 	const [form] = Form.useForm();
 
 	const onFinish = (values: Partial<Plan>) => {
 		onSubmit({
 			...values,
+			description:JSON.stringify(values.description)
 		});
 		console.log(values);
 	};
 
 	useEffect(() => {
 		console.log(initialValue);
+		let planDescriptions:Array<Descriptions> = [];
+		try {
+			planDescriptions = JSON.parse(initialValue.description as string);
+		} catch (error) {
+			planDescriptions = [];
+		}
+
 		if (initialValue) {
 			form.setFieldsValue({
 				price: initialValue.price,
 				title: initialValue.title,
-				descriptions: [
-					{ entry: "novapo", content: "sfelfkjselkjf" },
-					{ entry: "novapo", content: "sfelfkjselkjf" },
-					{ entry: "novapo", content: "sfelfkjselkjf" },
-					{ entry: "novapo", content: "sfelfkjselkjf" },
-			
-				],
+				description: planDescriptions
 			});
 		}
 	}, []);
 
 	return (
 		<div>
-			<Form
+			<Form 
 				{...layout}
 				form={form}
 				name="control-hooks"
@@ -70,12 +74,19 @@ export default function PlanForm({
 				>
 					<Input />
 				</Form.Item>
+				<Form.Item
+					name="duration"
+					label="Duration (Day)"
+					rules={[{ required: true }]}
+				>
+					<Input />
+				</Form.Item>
 				<Row>
 					<Col span={4}>
 						<div className="text-right">Descriptons: &nbsp;</div>
 					</Col>
 					<Col span={20}>
-						<Form.List name="descriptions">
+						<Form.List name="description">
 							{(fields, { add, remove }) => (
 								<>
 									{fields.map(
@@ -157,7 +168,7 @@ export default function PlanForm({
 				</Row>
 
 				<Form.Item {...tailLayout}>
-					<Button type="primary" htmlType="submit">
+					<Button loading={loading} type="primary" htmlType="submit">
                         Submit
 					</Button>
 				</Form.Item>

@@ -10,6 +10,7 @@ import discount from "./discount/discountSlice";
 import plan from "./plan/planSlice";
 import user from "./user/userSlice";
 import comment from "./comment/commentSlice";
+import order from "./order/orderSlice";
 const rootReducer = combineReducers({
 	counter,
 	adminAuthThunk,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
 	discount,
 	plan,
 	user,
-	comment
+	comment,
+	order
 
 });
 

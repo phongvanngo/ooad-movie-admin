@@ -65,24 +65,24 @@ export const menus: Array<IMenuItem> = [
 			},
 		],
 	},
-	{
-		key: "company",
-		icon: () => <BulbOutlined />,
-		title: "Film Studio",
-		subMenuKey: "company management",
-		subMenu: [
-			{
-				key: "danhsachcompany",
-				title: "All Film Studios",
-				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMPANY_CREATE}`,
-			},
-			{
-				key: "taotheloaimoi",
-				title: "Create Film Studio",
-				path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMPANY}`,
-			},
-		],
-	},
+	// {
+	// 	key: "company",
+	// 	icon: () => <BulbOutlined />,
+	// 	title: "Film Studio",
+	// 	subMenuKey: "company management",
+	// 	subMenu: [
+	// 		{
+	// 			key: "danhsachcompany",
+	// 			title: "All Film Studios",
+	// 			path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMPANY_CREATE}`,
+	// 		},
+	// 		{
+	// 			key: "taotheloaimoi",
+	// 			title: "Create Film Studio",
+	// 			path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMPANY}`,
+	// 		},
+	// 	],
+	// },
 	{
 		key: "person",
 		icon: () => <TeamOutlined />,
@@ -137,10 +137,10 @@ export const menus: Array<IMenuItem> = [
 		title: "Comment",
 		path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.COMMENTS}`,
 	},
-	{
-		key: "orders",
-		icon: () => <BarsOutlined />,
-		title: "Orders",
-		path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.ORDERS}`,
-	},
+	// {
+	// 	key: "orders",
+	// 	icon: () => <BarsOutlined />,
+	// 	title: "Orders",
+	// 	path: `${APP_ROUTE.ADMIN}${ADMIN_ROUTE.ORDERS}`,
+	// },
 ];

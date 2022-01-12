@@ -158,7 +158,7 @@ export default function MovieForm({
 			>
 				<Input />
 			</Form.Item>
-			<Form.Item {...tailLayout} label="Genres">
+			<Form.Item label="Genres">
 				<SelectGenreForm
 					genres={genres}
 					onChange={(values) => {

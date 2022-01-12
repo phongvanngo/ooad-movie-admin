@@ -8,5 +8,6 @@ export interface AdminModel {
 export interface User {
     id:string;
     username:string;
+    fullname:string;
     role:string;
 }
