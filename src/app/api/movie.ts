@@ -8,6 +8,10 @@ export const movieApi = {
 		const url = "/movies";
 		return axiosClient.get(url);
 	},
+	getTopRating: (): Promise<DataResponse<MovieModel[]>> => {
+		const url = "/movies/rating?size=20";
+		return axiosClient.get(url);
+	},
 	getById: (id: string): Promise<DataResponse<MovieModel>> => {
 		const url = "/movie?id="+id;
 		return axiosClient.get(url);

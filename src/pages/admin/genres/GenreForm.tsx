@@ -78,7 +78,7 @@ export default function GenreForm({
 					});
 				}}
 			>
-				{/* Random */}
+				Random
 			</Button>
 		</div>
 	);

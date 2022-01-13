@@ -20,6 +20,17 @@ function* fetchMovieList() {
 		yield put(movieActions.fetchMovieListFailed());
 	}
 }
+function* fetchTopRatingMovie() {
+	try {
+		const response: DataResponse<MovieModel[]> = yield call(
+			movieApi.getTopRating
+		);
+		yield put(movieActions.fetchTopRatingMovieSuccess(response));
+	} catch (error) {
+		
+		yield put(movieActions.fetchTopRatingMovieFailed());
+	}
+}
 function* deleteMovie(action: PayloadAction<string>) {
 	try {
 		const response: DataResponse<MovieModel[]> = yield call(
@@ -66,6 +77,10 @@ export default function* movieSaga() {
 	yield takeLatest(
 		movieActions.fetchMovieListFromTheMovieDB,
 		fetchMovieListFromTheMovieDB,
+	);
+	yield takeLatest(
+		movieActions.fetchTopRatingMovie,
+		fetchTopRatingMovie,
 	);
 	yield takeLatest(
 		movieActions.deleteMovie,

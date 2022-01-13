@@ -1,10 +1,12 @@
-import { Button, Checkbox, Form, Image, Input, Select } from "antd";
+import { Button, Checkbox, Form, Image, Input, message, Select } from "antd";
+import { movieApi } from "app/api/movie";
 import { theMovieDBApi } from "app/api/theMovieDBApi";
 import movieDbApiConfig from "app/api/theMovieDBApi/config";
 import { Genre } from "app/model/genre";
 import { MovieModel } from "app/model/movie";
 import { selectGenreList } from "app/redux/genre/genreSlice";
-import { useAppSelector } from "app/redux/store";
+import { movieActions } from "app/redux/movie/movieSlice";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
 import { converDate, getRandomInt } from "app/utils/my-library";
 import moment from "moment";
 import { ReactElement, useEffect, useState } from "react";
@@ -33,6 +35,8 @@ export default function MovieForm({
 	onSubmit,
 }: Props): ReactElement {
 	const [form] = Form.useForm();
+
+	const dispatch = useAppDispatch();
 
 	const onFinish = (values: MovieModel) => {
 		const movie = {
@@ -68,8 +72,10 @@ export default function MovieForm({
 				).format("DD/MM/YYYY"),
 				budget: initialValue.budget,
 				homepage: initialValue.homepage,
-				isTVSeries: initialValue.isTVSeries,
+				is_tv_series: initialValue.is_tv_series,
 				adult: initialValue.adult,
+				trailer1:initialValue.trailer1,
+				trailer2:initialValue.trailer2,
 			});
 			setMovieId(initialValue.id);
 			setMovieGenres(initialValue.genre_ids);
@@ -78,13 +84,78 @@ export default function MovieForm({
 			setBackdrop(
 				movieDbApiConfig.originalImage(initialValue.backdrop_path),
 			);
+			setVideosOfMovie([initialValue.trailer1, initialValue.trailer2]);
 		}
 	}, []);
+
+	function handleSubmit(movie: Partial<MovieModel>): void {
+		(async () => {
+			try {
+				const response = await movieApi.add(movie);
+				message.success("Thành công");
+			} catch (error) {
+				message.error("Không thể thực hiện");
+			}
+		})();
+	}
+
+	async function generateMovie() {
+		for (let i = 1; i < 20; i++) {
+			let found = false;
+			console.log("😁😀😀😁😁😂🤣😃😄😅😆",i);
+			while (!found) {
+				const id: any = getRandomInt(63469);
+				try {
+					const res = await theMovieDBApi.movie.getMovieAndVideosById(
+						id,
+					);
+					console.log(res);
+					const videos = res.videos;
+					// const videos = await theMovieDBApi.movie.getVideosOfMovie(id);
+					const newVideos = videos.map(
+						(e) => "https://www.youtube.com/embed/" + e.key,
+					);
+					const movie_detail: MovieModel = res as MovieModel;
+					console.log(movie_detail.backdrop_path, newVideos);
+					if (!movie_detail.backdrop_path || !newVideos[0])
+						throw Error();
+					const newMovie: Partial<MovieModel> = {
+						// id: movie_detail.id,
+						backdrop_path: movie_detail.backdrop_path,
+						title: movie_detail.title,
+						original_title: movie_detail.original_title,
+						overview: movie_detail.overview,
+						poster_path: movie_detail.poster_path,
+						release_date: converDate(movie_detail.release_date),
+						budget: movie_detail.budget,
+						homepage: movie_detail.homepage,
+						is_tv_series: true,
+						adult: movie_detail.adult,
+						trailer1: newVideos[0],
+						trailer2: newVideos[1],
+						genre_ids: movie_detail.genres.map((genre) => {
+							const index = genres.findIndex(
+								(e) => e.genre_id_fake == genre.id,
+							);
+							return genres[index].id;
+						}),
+						
+						movie_id_fake: movie_detail.id,
+						
+					};
+					found = true;
+					handleSubmit(newMovie);
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		}
+	}
 
 	async function handleRandomValue() {
 		let found = false;
 		while (!found) {
-			const id: any = getRandomInt(50000);
+			const id: any = getRandomInt(634649);
 			try {
 				const res = await theMovieDBApi.movie.getMovieAndVideosById(id);
 				console.log(res);
@@ -106,7 +177,7 @@ export default function MovieForm({
 					release_date: converDate(movie_detail.release_date),
 					budget: movie_detail.budget,
 					homepage: movie_detail.homepage,
-					isTVSeries: false,
+					is_tv_series: false,
 					adult: movie_detail.adult,
 					trailer1: newVideos[0],
 					trailer2: newVideos[1],
@@ -247,7 +318,7 @@ export default function MovieForm({
 			</Form.Item>
 
 			<Form.Item
-				name="isTVSeries"
+				name="is_tv_series"
 				valuePropName="checked"
 				{...tailLayout}
 			>
@@ -267,6 +338,16 @@ export default function MovieForm({
 				}}
 			>
                 Random Movie
+			</Button>
+			<Button
+				type="primary"
+				loading={loading}
+				onClick={() => {
+					// setLoading(true);
+					generateMovie();
+				}}
+			>
+                Generate Movie
 			</Button>
 		</Form>
 	);

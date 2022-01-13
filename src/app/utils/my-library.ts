@@ -142,3 +142,7 @@ export function formatCurrency(v: string | number): string {
 		.replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
 	return value;
 }
+
+export function getRandomArbitrary(min, max) {
+	return Math.random() * (max - min) + min;
+}

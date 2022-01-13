@@ -78,7 +78,7 @@ export default function MovieList({ searchTerm }: Props): ReactElement {
 		},
 		{
 			title: "Type",
-			dataIndex: "isTVSeries",
+			dataIndex: "is_tv_series",
 			render: (isTVSeries) =>
 				isTVSeries ? (
 					<Tag color="magenta">TV Series</Tag>

@@ -21,6 +21,7 @@ export interface MovieState {
     loading: boolean;
     editingMovie: MovieModel;
     pagination: TablePagination;
+	topRatingMovie:MovieModel[];
 }
 
 const initialState: MovieState = {
@@ -28,6 +29,7 @@ const initialState: MovieState = {
 	pagination: undefined,
 	loading: false,
 	editingMovie: undefined,
+	topRatingMovie:[]
 };
 
 export type MovieSearchParams = {
@@ -50,6 +52,16 @@ const movieSlice = createSlice({
 			state.loading = true;
 		},
 		fetchMovieListFailed(state) {
+			state.loading = false;
+		},
+		fetchTopRatingMovie(state) {
+			state.loading = true;
+		},
+		fetchTopRatingMovieSuccess(state, action: PayloadAction<DataResponse<MovieModel[]>>,) {
+			state.loading = false;
+			state.topRatingMovie = action.payload.data;
+		},
+		fetchTopRatingMovieFailed(state) {
 			state.loading = false;
 		},
 		deleteMovie(state, action: PayloadAction<string>) {
@@ -109,6 +121,8 @@ export const selectMovieList = (state: AppRootState) =>
 	state.rootReducer.movie.list;
 export const selectMovieLoading = (state: AppRootState) =>
 	state.rootReducer.movie.loading;
+export const selectTopRatingMovie = (state: AppRootState) =>
+	state.rootReducer.movie.topRatingMovie;
 export const selectEditingMovie = (state: AppRootState) =>
 	state.rootReducer.movie.editingMovie;
 export const selectTablePagination = (state: AppRootState) =>

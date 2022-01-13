@@ -12,8 +12,9 @@ export interface MovieModel {
     revenue: number;
     release_date: string;
     title: string;
+    vote_count:number;
     vote_average?: number;
-    isTVSeries: boolean;
+    // isTVSeries: boolean;
     original_language: boolean;
     genre_ids: Array<Genre> | Array<string>;
     genres:Array<Genre>;
@@ -25,7 +26,8 @@ export interface MovieModel {
     trailer1:string;
     trailer2:string;
     movie_id_fake:string;
-    videos?:Video[]
+    videos?:Video[],
+    is_tv_series:boolean,
 }
 
 export interface MovieModelCamelCase {
@@ -59,7 +61,7 @@ export const MovieModelMapPattern= {
 	// genre_ids:"genreIds",
 	// original_title:"originalTitle",
 	// originalTitle:"original_title",
-	is_tv_series:"isTVSeries",
+	// is_tv_series:"isTVSeries",
 	back_drop_path:"backdrop_path",
 	genres:"genre_ids",
 };

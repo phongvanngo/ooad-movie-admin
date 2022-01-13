@@ -10,3 +10,9 @@ export type Descriptions = {
     entry: string;
     content: string;
 }
+
+export interface PlanStatistical {
+    plan_id:string;
+    title:string;
+    total:number;
+}

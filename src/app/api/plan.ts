@@ -1,5 +1,5 @@
 import { DataResponse } from "app/model/PayloadResponse";
-import { Plan } from "app/model/plan";
+import { Plan, PlanStatistical } from "app/model/plan";
 import axiosClient from "./axiosClient";
 
 export const planApi = {
@@ -18,5 +18,9 @@ export const planApi = {
 	delete: (id: string): Promise<DataResponse<any>> => {
 		const url = "/plan?id=" + id;
 		return axiosClient.delete(url);
+	},
+	getStatistic: (): Promise<DataResponse<PlanStatistical[]>> => {
+		const url = "/plans/order/top";
+		return axiosClient.get(url);
 	},
 };
