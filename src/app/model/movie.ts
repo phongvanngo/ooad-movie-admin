@@ -28,6 +28,7 @@ export interface MovieModel {
     movie_id_fake:string;
     videos?:Video[],
     is_tv_series:boolean,
+    name?:string
 }
 
 export interface MovieModelCamelCase {

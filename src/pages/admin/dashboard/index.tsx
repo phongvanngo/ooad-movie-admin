@@ -9,13 +9,26 @@ import {
 	selectMovieLoading,
 	selectTopRatingMovie,
 } from "app/redux/movie/movieSlice";
-import { orderActions, selectOrderList, selectOrderLoading } from "app/redux/order/orderSlice";
-import { planActions, selectPlanListStatistic, selectPlanLoading } from "app/redux/plan/planSlice";
+import {
+	orderActions,
+	selectOrderList,
+	selectOrderLoading,
+} from "app/redux/order/orderSlice";
+import {
+	planActions,
+	selectPlanListStatistic,
+	selectPlanLoading,
+} from "app/redux/plan/planSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
-import { selectUserList, selectUserLoading, userActions } from "app/redux/user/userSlice";
+import {
+	selectUserList,
+	selectUserLoading,
+	userActions,
+} from "app/redux/user/userSlice";
 import React, { ReactElement, useEffect } from "react";
 import OrderAnalysis from "./Chart/OrderAnalysis";
 import RevenueByPlan from "./Chart/RevenueByPlan";
+import LatestOrders from "./LatestOrder";
 import OverviewAnalysis from "./OverviewAnalysis";
 import TopRatingMovie from "./TopRatingMovie";
 
@@ -51,9 +64,19 @@ export default function AdminDashboard(): ReactElement {
 				users={usersLoading || users.length}
 				orders={ordersLoading || orders.length}
 			/>
-			<TopRatingMovie movies={topRatingMovie} loading={topRatingMovieLoading}/>
-			<RevenueByPlan loading={planStatisticLoading} planStatistic={planStatistic} />
-			<OrderAnalysis loading={ordersLoading} orders={orders}/>
+			<TopRatingMovie
+				movies={topRatingMovie}
+				loading={topRatingMovieLoading}
+			/>
+			<RevenueByPlan
+				loading={planStatisticLoading}
+				planStatistic={planStatistic}
+			/>
+			<div className="grid lg:grid-cols-2">
+				<OrderAnalysis loading={ordersLoading} orders={orders} />
+				<LatestOrders loading={ordersLoading} orders={orders} />
+
+			</div>
 		</div>
 	);
 }

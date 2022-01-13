@@ -1,5 +1,6 @@
 export interface Plan {
     id: string;
+    name?:string;
     title:string;
     price:number;
     description:Array<Descriptions> | string;
