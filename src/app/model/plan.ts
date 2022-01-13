@@ -3,7 +3,7 @@ export interface Plan {
     title:string;
     price:number;
     description:Array<Descriptions> | string;
-    duration:number;
+    expired:number;
 }
 
 export type Descriptions = {

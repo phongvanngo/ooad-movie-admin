@@ -47,14 +47,15 @@ export default function PlanForm({
 			form.setFieldsValue({
 				price: initialValue.price,
 				title: initialValue.title,
-				description: planDescriptions
+				description: planDescriptions,
+				expired: initialValue.expired
 			});
 		}
 	}, []);
 
 	return (
 		<div>
-			<Form 
+			<Form
 				{...layout}
 				form={form}
 				name="control-hooks"
@@ -75,7 +76,7 @@ export default function PlanForm({
 					<Input />
 				</Form.Item>
 				<Form.Item
-					name="duration"
+					name="expired"
 					label="Duration (Day)"
 					rules={[{ required: true }]}
 				>

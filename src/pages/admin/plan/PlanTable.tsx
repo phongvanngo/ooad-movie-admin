@@ -46,7 +46,12 @@ export default function PlanList({ searchTerm }: Props): ReactElement {
 			title: "Price",
 			dataIndex: "price",
 			sorter: true,
-			render:(price)=><div>{formatCurrency(price)}</div>
+			render: (price) => <div>{formatCurrency(price)}</div>,
+		},
+		{
+			title: "Duration (Day)",
+			dataIndex: "expired",
+			sorter: true,
 		},
 		{
 			title: "Action",

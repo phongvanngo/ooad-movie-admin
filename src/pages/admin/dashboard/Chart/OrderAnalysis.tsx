@@ -131,7 +131,7 @@ export default function OrderAnalysis({
 								labels: revenues.map((e) => e.name),
 								datasets: [
 									{
-										label: "Doanh thu",
+										label: "Subcribes",
 										data: revenues.map((e) => e.value),
 										backgroundColor:
                                             "rgba(255, 99, 132, 0.2)",
@@ -141,11 +141,8 @@ export default function OrderAnalysis({
 									},
 								],
 							}}
-							options={
-								{
-									// maintainAspectRatio: true,
-								}
-							}
+							options={options}
+							
 						></Line>
 					</div>
 				</div>
